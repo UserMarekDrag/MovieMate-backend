@@ -1,0 +1,9 @@
+*.pyc
+*~
+__pycache__
+venv
+/static
+.DS_Store
+.env
+working
+media
