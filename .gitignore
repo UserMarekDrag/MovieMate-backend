@@ -1,7 +1,7 @@
 *.pyc
 *~
 __pycache__
-venv
+env
 /static
 .DS_Store
 .env
