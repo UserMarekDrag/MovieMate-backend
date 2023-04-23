@@ -1,0 +1,56 @@
+# docker-compose.yml
+
+# Version of Docker Compose configuration file
+version: "3"
+
+# Define services that are part of the application
+services:
+
+  # Service for the PostgreSQL database
+  db:
+    # Use official PostgreSQL Docker image from Docker Hub
+    image: postgres
+
+    # Set environment variables for the PostgreSQL container
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+
+    # Expose PostgreSQL port and map it to the same port on the host
+    ports:
+      - "5432:5432"
+
+    # Create a named volume for PostgreSQL data storage
+    volumes:
+      - pg_data:/var/lib/postgresql/data/
+
+  # Service for the Django web application
+  web:
+
+    # Build the Docker image for the web service using the Dockerfile in the current directory
+    build:
+      context: .
+
+    # Command to start the Django development server
+    command: python manage.py runserver 0.0.0.0:8000
+
+    # Load environment variables from the .env file in the current directory
+    env_file:
+      - .env
+
+    # Mount the project directory on the host into the container for development purposes
+    volumes:
+      - .:/code
+
+    # Expose the web server port and map it to the same port on the host
+    ports:
+      - "8000:8000"
+
+    # Depend on the db service so that it starts first
+    depends_on:
+      - db
+
+# Define named volumes for data storage
+volumes:
+  pg_data: # PostgreSQL data volume
