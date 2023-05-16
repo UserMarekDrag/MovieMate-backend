@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'user_api.apps.UserApiConfig',
     'movie_api',
+    'scraper',
 ]
 
 MIDDLEWARE = [

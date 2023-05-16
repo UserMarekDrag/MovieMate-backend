@@ -1,0 +1,12 @@
+# Files and folders to be ignored during Docker image build
+
+# Ignore virtual environment folder (venv)
+env/
+
+# Ignore temporary files and directories
+working/
+*.pyc
+*.pyo
+__pycache__/
+*.swp
+*.env
