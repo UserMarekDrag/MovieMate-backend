@@ -25,6 +25,17 @@ services:
     volumes:
       - pg_data:/var/lib/postgresql/data/
 
+  # Service for the RabbitMQ message broker
+  rabbit:
+
+    # Use official RabbitMQ Docker image from Docker Hub
+    image: rabbitmq:3-management
+
+    # Expose RabbitMQ port and map it to the same port on the host
+    ports:
+      - "5672:5672"  # AMQP protocol
+      - "15672:15672"  # Management UI
+
   # Service for the Django web application
   web:
 
@@ -50,6 +61,32 @@ services:
     # Depend on the db service so that it starts first
     depends_on:
       - db
+      - rabbit
+
+  # Service for the Celery task queue
+  celery:
+    # Set user ID and group ID for the Celery process (non-root user for enhanced security)
+    user: "1000:1000"
+
+    # Build the Docker image for the Celery service using the Dockerfile in the current directory
+    build:
+      context: .
+
+    # Command to start the Celery worker with our Django application and log level set to info
+    command: celery -A moviemate worker --loglevel=info
+
+    # Load environment variables from the .env file in the current directory
+    env_file:
+      - .env
+
+    # Mount the project directory on the host into the container for development purposes
+    volumes:
+      - .:/code
+
+    # Depend on the db and rabbit services so that they start first
+    depends_on:
+      - db
+      - rabbit
 
 # Define named volumes for data storage
 volumes:

@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'user_api.apps.UserApiConfig',
     'movie_api',
     'scraper',
+    'django_celery_results',
 ]
 
 MIDDLEWARE = [
@@ -149,3 +150,12 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# This line of code sets the broker URL for Celery.
+# The broker is responsible for distributing tasks to worker nodes,
+
+CELERY_BROKER_URL = config('CELERY_BROKER_URL')
+CELERY_RESULT_BACKEND = 'django-db'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
