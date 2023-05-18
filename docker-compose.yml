@@ -71,6 +71,7 @@ services:
     # Build the Docker image for the Celery service using the Dockerfile in the current directory
     build:
       context: .
+      dockerfile: Dockerfile.selenium
 
     # Command to start the Celery worker with our Django application and log level set to info
     command: celery -A moviemate worker --loglevel=info

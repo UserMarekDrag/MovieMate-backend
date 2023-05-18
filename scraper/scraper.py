@@ -9,9 +9,9 @@ from bs4 import BeautifulSoup
 
 
 # Constants
-CHROMEDRIVER_PATH = 'drivers/chromedriver.exe'
+CHROMEDRIVER_PATH = 'chromedriver'
 URL_FORMAT = 'https://multikino.pl/repertuar/{}/teraz-gramy?data={}'
-WAIT_TIME = 10
+WAIT_TIME = 30
 
 
 @contextmanager
@@ -22,8 +22,11 @@ def get_chrome_driver():
     """
     service = Service(CHROMEDRIVER_PATH)
     options = webdriver.ChromeOptions()
-    options.add_argument('--headless')  # run Chrome in headless mode
-    options.add_argument('--disable-gpu')
+    options.add_argument('--headless')  # Run Chrome without UI
+    options.add_argument('--disable-gpu')  # Disable GPU acceleration
+    options.add_argument('--no-sandbox')  # Disable sandbox for containers
+    options.add_argument('--disable-dev-shm-usage')  # Avoid /dev/shm usage
+
     driver = webdriver.Chrome(service=service, options=options)
     try:
         yield driver
