@@ -53,45 +53,58 @@ def get_movie_info(city, showing_date):
         - booking_link (str): The link for booking the movie.
     """
     try:
-        # Navigate to the page
         url = URL_FORMAT.format(city, showing_date)
         with get_chrome_driver() as driver:
             driver.get(url)
 
-            # Wait for the page to load
             wait = WebDriverWait(driver, WAIT_TIME)
             wait.until(ec.presence_of_element_located((By.CLASS_NAME, 'filmlist__item')))
 
-            # Get the page source and parse it with BeautifulSoup
-            page_source = driver.page_source
-            soup = BeautifulSoup(page_source, 'html.parser')
+            film_items = driver.find_elements(By.CLASS_NAME, 'filmlist__item')
+            movie_info_list = []
 
-            # Find the film list
-            film_list = soup.find('div', {'class': 'filmlist container container-small expand-small'})
+            for item in film_items:
+                driver.execute_script("arguments[0].scrollIntoView();", item)
 
-            # Find the film items and get the information
-            film_items = film_list.find_all('div', {'class': 'filmlist__item'})
-            movie_info_list = [
-                {
-                    'title': item.find('div', {'class': 'filmlist__info-txt'}).find('span',
-                                                                                    {'data-v-9364a27e': True}).text,
-                    'description': item.find('p', {'class': 'filmlist__synopsis--twoLines'}).text
-                    if item.find('p', {'class': 'filmlist__synopsis--twoLines'}) else 'No description',
+                # now you have to parse the item's HTML with BeautifulSoup
+                item_html = item.get_attribute('outerHTML')
+                soup_item = BeautifulSoup(item_html, 'html.parser')
 
-                    'show_info': [
-                                {
-                                    'hour': time.find('time', {'class': 'default'}).text.strip(),
-                                    'booking_link': 'https://multikino.pl' + time.find('a')['href']
-                                }
-                                for time in item.find_all('li', {'class': 'times__detail'})
-                                if time.find('time', {'class': 'default'}) is not None
-                             ]
-                }
-                for item in film_items
-            ]
+                # Continue the process here using 'soup_item' instead of 'item'
+                title = soup_item.find('div', {'class': 'filmlist__info-txt'}).find('span',
+                                                                                    {'data-v-9364a27e': True}).text
 
-            return movie_info_list
+                category = soup_item.find('a', {
+                    'class': 'film-details__item',
+                    'rv-class-film-details__item--selected': 'genre.highlighted'
+                }).text.strip() if soup_item.find('a', {
+                    'class': 'film-details__item',
+                    'rv-class-film-details__item--selected': 'genre.highlighted'
+                }) else ''
+
+                description = soup_item.\
+                    find('p', {'class': 'filmlist__synopsis--twoLines'}).text if soup_item.\
+                    find('p', {'class': 'filmlist__synopsis--twoLines'}) else 'No description'
+
+                # Get the image URL
+                img_url = soup_item.find('img').get('src')
+
+                show_info = [{
+                    'hour': time.find('time', {'class': 'default'}).text.strip(),
+                    'booking_link': 'https://multikino.pl' + time.find('a')['href']
+                } for time in soup_item.find_all('li', {'class': 'times__detail'})
+                    if time.find('time', {'class': 'default'}) is not None]
+
+                # Append the extracted info to movie_info_list
+                movie_info_list.append({
+                    'title': title,
+                    'category': category,
+                    'description': description,
+                    'image_url': img_url,
+                    'show_info': show_info
+                })
 
     except (WebDriverException, AttributeError) as e:
         print(f"Error occurred: {str(e)}")
-        return []
+
+    return movie_info_list

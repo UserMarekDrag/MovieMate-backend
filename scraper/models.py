@@ -11,7 +11,9 @@ class Cinema(models.Model):
 class Film(models.Model):
     """Represents a film."""
     title = models.CharField(max_length=255)
-    description = models.TextField()
+    category = models.CharField(max_length=255, null=True)
+    description = models.TextField(default="")
+    image_url = models.URLField()
     cinema = models.ForeignKey('Cinema', on_delete=models.CASCADE, related_name='films')
 
 
@@ -20,8 +22,8 @@ class Showtime(models.Model):
     film = models.ForeignKey('Film', on_delete=models.CASCADE, related_name='showtimes')
     cinema = models.ForeignKey('Cinema', on_delete=models.CASCADE, related_name='showtimes')
     date = models.DateField()
-    time = models.TimeField(default="")  # Add a time field
-    booking_link = models.URLField(default="")  # Move the booking link here
+    time = models.TimeField(default="")
+    booking_link = models.URLField(default="")
 
 
 class ScraperData(models.Model):

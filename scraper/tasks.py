@@ -32,6 +32,8 @@ def scrape_and_store_data():
 
             if created:
                 film.description = movie_info['description']
+                film.category = movie_info['category']
+                film.image_url = movie_info['image_url']
                 film.save()
 
             for show_info in movie_info['show_info']:
