@@ -33,4 +33,4 @@ class Showtime(models.Model):
 
 class ScraperData(models.Model):
     """Represents scraped data for a cinema."""
-    date = models.DateField()
+    date = models.DateField(unique=True)
