@@ -13,11 +13,9 @@ WAIT_TIME = 30
 
 # Constants Multikino
 URL_FORMAT_MULTIKINO = 'https://multikino.pl/repertuar/{}/teraz-gramy?data={}'
-movie_info_list_multikino = []
 
 # Constants Helios
 URL_FORMAT_HELIOS = 'https://www.helios.pl/{},{}/Repertuar/index/dzien/{}/kino/{}'
-movie_info_list_helios = []
 
 
 @contextmanager
@@ -58,6 +56,7 @@ def get_movie_info_from_multikino(city, showing_date):
         - hour (str): The time when the movie is playing.
         - booking_link (str): The link for booking the movie.
     """
+    movie_info_list_multikino = []
     try:
         url = URL_FORMAT_MULTIKINO.format(city, showing_date)
         with get_chrome_driver() as driver:
@@ -133,6 +132,7 @@ def get_movie_info_helios(city, day, cinema_numb):
         - hour (str): The time when the movie is playing.
         - booking_link (str): The link for booking the movie.
     """
+    movie_info_list_helios = []
     try:
         url = URL_FORMAT_HELIOS.format(cinema_numb, city, day, cinema_numb)
         with get_chrome_driver() as driver:

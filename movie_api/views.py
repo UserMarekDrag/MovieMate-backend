@@ -1,11 +1,11 @@
 from .models import Movie
-from .serializers import MovieSerializer, ShowtimeSerializer
-from scraper.models import Showtime, City
+from scraper.models import ScraperAll
+from .serializers import MovieSerializer, ScraperAllSerializer
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from rest_framework import generics
-from django.shortcuts import get_object_or_404
+from django_filters.rest_framework import DjangoFilterBackend
 
 
 @api_view(['GET'])
@@ -82,15 +82,12 @@ def movie_delete(request, pk):
     return Response('Item successfully deleted!')
 
 
-class ShowtimeList(generics.ListAPIView):
+class CinemaInCityList(generics.ListAPIView):
     """
-    Lists showtimes for a specific city and date.
+    API endpoint for listing cinemas in a city based on filters.
     """
-    serializer_class = ShowtimeSerializer
     permission_classes = [AllowAny]  # Authorization off
-
-    def get_queryset(self):
-        city_name = self.kwargs['city']
-        date = self.kwargs['date']
-        city = get_object_or_404(City, name=city_name)
-        return Showtime.objects.filter(city=city, film__cinema_in_city__data__date=date)
+    queryset = ScraperAll.objects.all()
+    serializer_class = ScraperAllSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['city_name', 'date']

@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'movie_api',
     'scraper',
     'django_celery_results',
+    'django_filters',
 ]
 
 MIDDLEWARE = [
