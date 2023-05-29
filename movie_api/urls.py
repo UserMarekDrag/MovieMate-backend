@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from .views import CinemaInCityList
+from .views import ShowList
 
 
 urlpatterns = [
@@ -10,5 +10,5 @@ urlpatterns = [
     path('movie-create/', views.movie_create, name='movie-create'),
     path('movie-update/<str:pk>/', views.movie_update, name='movie-update'),
     path('movie-delete/<str:pk>/', views.movie_delete, name='movie-delete'),
-    path('cinemas_in_city/', CinemaInCityList.as_view(), name='cinema_in_city_list'),
+    path('cinemas_in_city/', ShowList.as_view(), name='cinema_in_city_list'),
 ]

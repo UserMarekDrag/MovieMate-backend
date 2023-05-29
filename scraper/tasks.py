@@ -1,6 +1,6 @@
 from datetime import datetime
 from datetime import timedelta
-from .models import ScraperAll
+from .models import Cinema, Movie, Show
 from .scraper import get_movie_info_from_multikino, get_movie_info_helios
 from celery import shared_task
 
@@ -29,31 +29,39 @@ def scrape_and_store_data_multikino():
 
     # Save the scraping date
     for date in dates:
-
         for city_name in cities:
-
             movie_info_list = get_movie_info_from_multikino(city_name, date)
 
             for movie_info in movie_info_list:
                 for show_info in movie_info['show_info']:
-
-                    # Convert the time to the TimeField format
                     show_time = datetime.strptime(show_info['hour'], '%H:%M').time()
 
                     booking_link = show_info['booking_link']
 
-                    # Create a new film if it doesn't exist
-                    ScraperAll.objects.get_or_create(
+                    # Get or create the cinema
+                    cinema, _ = Cinema.objects.get_or_create(
+                        name=cinema_name,
+                        city=city_name
+                    )
+
+                    # Get or create the movie
+                    movie, _ = Movie.objects.get_or_create(
+                        title=movie_info['title'],
+                        defaults={
+                            'category': movie_info['category'],
+                            'description': movie_info['description'],
+                            'image_url': movie_info['image_url'],
+                        }
+                    )
+
+                    # Create a new show if it doesn't exist
+                    Show.objects.get_or_create(
                         booking_link=booking_link,
                         defaults={
-                                'title': movie_info['title'],
-                                'cinema_name': cinema_name,
-                                'city_name': city_name,
-                                'date': date,
-                                'category': movie_info['category'],
-                                'description': movie_info['description'],
-                                'image_url': movie_info['image_url'],
-                                'time': show_time,
+                            'cinema': cinema,
+                            'movie': movie,
+                            'date': date,
+                            'time': show_time,
                         },
                     )
 
@@ -93,14 +101,24 @@ def scrape_and_store_data_helios():
 
                     booking_link = show_info['booking_link']
 
-                    # Create a new film if it doesn't exist
-                    ScraperAll.objects.get_or_create(
+                    # Get or create the cinema
+                    cinema, _ = Cinema.objects.get_or_create(
+                        name=cinema_name,
+                        city=city_name
+                    )
+
+                    # Get or create the movie
+                    movie, _ = Movie.objects.get_or_create(
+                        title=movie_info['title'],
+                    )
+
+                    # Create a new show if it doesn't exist
+                    Show.objects.get_or_create(
                         booking_link=booking_link,
                         defaults={
-                                'title': movie_info['title'],
-                                'cinema_name': cinema_name,
-                                'city_name': city_name,
-                                'date': date,
-                                'time': show_time,
+                            'cinema': cinema,
+                            'movie': movie,
+                            'date': date,
+                            'time': show_time,
                         },
                     )

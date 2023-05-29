@@ -1,16 +1,30 @@
 from django.db import models
 
 
-class ScraperAll(models.Model):
+class Cinema(models.Model):
     """
-    Model representing scraped data for movies.
+    Model representing a cinema.
     """
-    cinema_name = models.CharField(max_length=255)
-    city_name = models.CharField(max_length=255)
-    date = models.DateField()
+    name = models.CharField(max_length=255)
+    city = models.CharField(max_length=255)
+
+
+class Movie(models.Model):
+    """
+    Model representing a movie.
+    """
     title = models.CharField(max_length=255)
     category = models.CharField(max_length=255, null=True)
     description = models.TextField(null=True)
     image_url = models.URLField(null=True)
-    booking_link = models.URLField(unique=True, default="")
-    time = models.TimeField(default="")
+
+
+class Show(models.Model):
+    """
+    Model representing a movie show.
+    """
+    cinema = models.ForeignKey(Cinema, on_delete=models.CASCADE)
+    movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
+    date = models.DateField()
+    time = models.TimeField()
+    booking_link = models.URLField(unique=True)

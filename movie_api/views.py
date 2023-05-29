@@ -1,6 +1,6 @@
 from .models import Movie
-from scraper.models import ScraperAll
-from .serializers import MovieSerializer, ScraperAllSerializer
+from scraper.models import Show
+from .serializers import MovieSerializer, ShowSerializer
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
@@ -82,12 +82,12 @@ def movie_delete(request, pk):
     return Response('Item successfully deleted!')
 
 
-class CinemaInCityList(generics.ListAPIView):
+class ShowList(generics.ListAPIView):
     """
-    API endpoint for listing cinemas in a city based on filters.
+    API endpoint for listing shows based on filters.
     """
     permission_classes = [AllowAny]  # Authorization off
-    queryset = ScraperAll.objects.all()
-    serializer_class = ScraperAllSerializer
+    queryset = Show.objects.all()
+    serializer_class = ShowSerializer
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['city_name', 'date']
+    filterset_fields = ['cinema__city', 'date']

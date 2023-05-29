@@ -1,7 +1,6 @@
 from rest_framework import serializers
 from django.utils import timezone
-from .models import Movie
-from scraper.models import ScraperAll
+from scraper.models import Cinema, Movie, Show
 
 
 class MovieSerializer(serializers.ModelSerializer):
@@ -23,10 +22,31 @@ class MovieSerializer(serializers.ModelSerializer):
         return data
 
 
-class ScraperAllSerializer(serializers.ModelSerializer):
+class CinemaSerializer(serializers.ModelSerializer):
     """
-    Serializer for the ScraperAll model.
+    Serializer for the Cinema model.
     """
     class Meta:
-        model = ScraperAll
-        fields = ['cinema_name', 'city_name', 'date', 'title', 'category', 'description', 'image_url', 'booking_link', 'time']
+        model = Cinema
+        fields = ['name', 'city']
+
+
+class MovieSerializer(serializers.ModelSerializer):
+    """
+    Serializer for the Movie model.
+    """
+    class Meta:
+        model = Movie
+        fields = ['title', 'category', 'description', 'image_url']
+
+
+class ShowSerializer(serializers.ModelSerializer):
+    """
+    Serializer for the Show model.
+    """
+    cinema = CinemaSerializer(read_only=True)
+    movie = MovieSerializer(read_only=True)
+
+    class Meta:
+        model = Show
+        fields = ['cinema', 'movie', 'date', 'time', 'booking_link']
