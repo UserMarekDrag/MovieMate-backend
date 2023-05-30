@@ -1,7 +1,7 @@
 from datetime import datetime
 from datetime import timedelta
 from .models import Cinema, Movie, Show
-from .scraper import get_movie_info_from_multikino, get_movie_info_helios
+from .scraper import MultikinoScraper, HeliosScraper
 from celery import shared_task
 
 
@@ -20,7 +20,7 @@ def scrape_and_store_data_multikino():
 
     # Get today's date and fetch movie data
     today = datetime.today()
-    AMOUNT_OF_DAYS = 3
+    AMOUNT_OF_DAYS = 4
     dates = []
 
     for i in range(AMOUNT_OF_DAYS):
@@ -28,9 +28,10 @@ def scrape_and_store_data_multikino():
         dates.append(showing_date.strftime('%Y-%m-%d'))
 
     # Save the scraping date
+    multikino_scraper = MultikinoScraper()
     for date in dates:
         for city_name in cities:
-            movie_info_list = get_movie_info_from_multikino(city_name, date)
+            movie_info_list = multikino_scraper.get_movie_info(city_name, date)
 
             for movie_info in movie_info_list:
                 for show_info in movie_info['show_info']:
@@ -77,7 +78,7 @@ def scrape_and_store_data_helios():
 
     # Get today's date and fetch movie data
     today = datetime.today()
-    AMOUNT_OF_DAYS = 3
+    AMOUNT_OF_DAYS = 4
     dates = {}
 
     for i in range(0, AMOUNT_OF_DAYS):
@@ -85,13 +86,14 @@ def scrape_and_store_data_helios():
         dates[(showing_date.strftime('%Y-%m-%d'))] = i
 
     # Save the scraping date
+    helios_scraper = HeliosScraper()
     for date in dates:
         data_number = dates[date]
 
         for city_name in cities:
             cinema_number_in_city = cities[city_name]
 
-            movie_info_list = get_movie_info_helios(city_name, data_number, cinema_number_in_city)
+            movie_info_list = helios_scraper.get_movie_info(city_name, data_number, cinema_number_in_city)
 
             for movie_info in movie_info_list:
                 for show_info in movie_info['show_info']:
