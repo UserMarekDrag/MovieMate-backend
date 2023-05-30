@@ -7,12 +7,19 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 from bs4 import BeautifulSoup
+import logging
+
 
 # Constants
 CHROMEDRIVER_PATH = 'chromedriver'
 WAIT_TIME = 30
 MULTIKINO_URL_FORMAT = 'https://multikino.pl/repertuar/{}/teraz-gramy?data={}'
 HELIOS_URL_FORMAT = 'https://www.helios.pl/{},{}/Repertuar/index/dzien/{}/kino/{}'
+
+# Setup logging
+logging.basicConfig(filename='logs/movie_scraper.log', level=logging.ERROR,
+                    format='%(asctime)s %(levelname)s %(name)s %(message)s')
+logger = logging.getLogger(__name__)
 
 
 class BaseMovieScraper(ABC):
@@ -51,6 +58,7 @@ class MultikinoScraper(BaseMovieScraper):
     """
     Movie scraper for Multikino website.
     """
+    URL_FORMAT = MULTIKINO_URL_FORMAT
 
     def get_movie_info(self, city, showing_date):
         """
@@ -121,7 +129,7 @@ class MultikinoScraper(BaseMovieScraper):
                     })
 
         except (WebDriverException, AttributeError) as e:
-            print(f"Error occurred: {str(e)}")
+            logger.error(f"Error occurred: {str(e)}")
 
         return movie_info_list_multikino
 
@@ -130,6 +138,7 @@ class HeliosScraper(BaseMovieScraper):
     """
     Movie scraper for Helios website.
     """
+    URL_FORMAT = HELIOS_URL_FORMAT
 
     def get_movie_info(self, city, day, cinema_numb):
         """
@@ -183,6 +192,6 @@ class HeliosScraper(BaseMovieScraper):
                         })
 
         except (WebDriverException, AttributeError) as e:
-            print(f"Error occurred: {str(e)}")
+            logger.error(f"Error occurred: {str(e)}")
 
         return movie_info_list_helios

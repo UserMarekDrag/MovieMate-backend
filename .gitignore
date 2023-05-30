@@ -7,3 +7,4 @@ env
 .env
 working
 media
+logs
