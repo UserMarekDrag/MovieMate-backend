@@ -107,6 +107,23 @@ services:
       - db
       - rabbit
 
+  # Service for the Celery Beat scheduler
+  celery-beat:
+    # Build the Docker image for the Celery Beat service using the Dockerfile in the current directory
+    build: .
+
+    # Command to start the Celery Beat scheduler with our Django application and log level set to info
+    command: celery -A moviemate beat --loglevel=info
+
+    # Mount the project directory on the host into the Celery Beat container for development purposes
+    volumes:
+      - .:/code
+
+    # Depend on the db and rabbit services so that they start first
+    depends_on:
+      - db
+      - rabbit
+
 # Define named volumes for data storage
 volumes:
   pg_data: # PostgreSQL data volume

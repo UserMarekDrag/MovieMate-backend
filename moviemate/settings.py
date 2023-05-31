@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 from decouple import config
+from celery.schedules import crontab
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -160,3 +161,15 @@ CELERY_BROKER_URL = config('CELERY_BROKER_URL')
 CELERY_RESULT_BACKEND = 'django-db'
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
+
+# Celery beat schedule
+CELERY_BEAT_SCHEDULE = {
+    'scrape_and_store_data_multikino': {
+        'task': 'scraper.tasks.scrape_and_store_data_multikino',
+        'schedule': crontab(hour=18, minute=10),
+    },
+    'scrape_and_store_data_helios': {
+        'task': 'scraper.tasks.scrape_and_store_data_helios',
+        'schedule': crontab(hour=18, minute=15),
+    },
+}
