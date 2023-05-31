@@ -8,3 +8,4 @@ env
 working
 media
 logs
+*.log
