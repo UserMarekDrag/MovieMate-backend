@@ -26,15 +26,87 @@ class BaseScrapeStore(ABC):
     AMOUNT_OF_DAYS = 4
 
     def __init__(self, cities, cinema_name):
+        """
+        Initialize the BaseScrapeStore.
+
+        Args:
+            cities (list): List of cities to scrape movie data for.
+            cinema_name (str): Name of the cinema for which the data is being scraped.
+        """
         self.cities = cities
         self.cinema_name = cinema_name
+        self.scraper = self.create_scraper()
+
+    @abstractmethod
+    def create_scraper(self):
+        """
+        Create and return the scraper object.
+        """
+        pass
+
+    @abstractmethod
+    def get_dates(self):
+        """
+        Get a list of dates for which to scrape movie data.
+        """
+        pass
+
+    def create_cinema(self, city_name):
+        """
+        Create and return a Cinema object.
+
+        Args:
+            city_name (str): Name of the city.
+
+        Returns:
+            Cinema: The created or retrieved Cinema object.
+        """
+        cinema, _ = Cinema.objects.get_or_create(
+            name=self.cinema_name,
+            city=city_name
+        )
+        return cinema
 
     @abstractmethod
     def scrape_and_store_data(self):
         """
-        Abstract method for scraping and storing movie data.
+        Scrape movie data for the specified cities and dates, and store it in the database.
         """
         pass
+
+    @abstractmethod
+    def create_movie(self, movie_info):
+        """
+        Create and return a Movie object.
+
+        Args:
+            movie_info (dict): Information about the movie.
+        """
+        pass
+
+    def create_show(self, booking_link, cinema, movie, date, show_time):
+        """
+        Create and store a Show object.
+
+        Args:
+            booking_link (str): Link to book the show.
+            cinema (Cinema): The Cinema object.
+            movie (Movie): The Movie object.
+            date (str): The date of the show in the format '%Y-%m-%d'.
+            show_time (time): The time of the show.
+
+        Returns:
+            Show: The created Show object.
+        """
+        Show.objects.get_or_create(
+            booking_link=booking_link,
+            defaults={
+                'cinema': cinema,
+                'movie': movie,
+                'date': date,
+                'time': show_time,
+            },
+        )
 
 
 class MultikinoScrapeStore(BaseScrapeStore):
@@ -42,17 +114,50 @@ class MultikinoScrapeStore(BaseScrapeStore):
     Scrape and store movie data from the Multikino website.
     """
     def __init__(self, cities):
+        """
+        Initialize the MultikinoScrapeStore.
+        """
         super().__init__(cities, 'multikino')
-        self.scraper = MultikinoScraper()
+
+    def create_scraper(self):
+        """
+        Create and return the MultikinoScraper object.
+        """
+        return MultikinoScraper()
+
+    def get_dates(self):
+        """
+        Get a list of dates for which to scrape movie data.
+        """
+        today = datetime.today()
+        return [add_days(today, i).strftime('%Y-%m-%d') for i in range(self.AMOUNT_OF_DAYS)]
+
+    def create_movie(self, movie_info):
+        """
+        Create and return a Movie object.
+
+        Args:
+            movie_info (dict): Information about the movie.
+
+        Returns:
+            Movie: The created or retrieved Movie object.
+        """
+        movie, _ = Movie.objects.get_or_create(
+            title=movie_info['title'],
+            defaults={
+                'category': movie_info['category'],
+                'description': movie_info['description'],
+                'image_url': movie_info['image_url'],
+            }
+        )
+        return movie
 
     def scrape_and_store_data(self):
         """
-        Scrape and store movie data from the Multikino website for multiple cities and dates.
+        Scrape movie data from the Multikino website for the specified cities and dates,
+        and store it in the database.
         """
-        today = datetime.today()
-        dates = [add_days(today, i).strftime('%Y-%m-%d') for i in range(self.AMOUNT_OF_DAYS)]
-
-        for date in dates:
+        for date in self.get_dates():
             for city_name in self.cities:
                 movie_info_list = self.scraper.get_movie_info(city_name, date)
 
@@ -60,29 +165,9 @@ class MultikinoScrapeStore(BaseScrapeStore):
                     for show_info in movie_info['show_info']:
                         show_time = datetime.strptime(show_info['hour'], '%H:%M').time()
                         booking_link = show_info['booking_link']
-                        cinema, _ = Cinema.objects.get_or_create(
-                            name=self.cinema_name,
-                            city=city_name
-                        )
-
-                        movie, _ = Movie.objects.get_or_create(
-                            title=movie_info['title'],
-                            defaults={
-                                'category': movie_info['category'],
-                                'description': movie_info['description'],
-                                'image_url': movie_info['image_url'],
-                            }
-                        )
-
-                        Show.objects.get_or_create(
-                            booking_link=booking_link,
-                            defaults={
-                                'cinema': cinema,
-                                'movie': movie,
-                                'date': date,
-                                'time': show_time,
-                            },
-                        )
+                        cinema = self.create_cinema(city_name)
+                        movie = self.create_movie(movie_info)
+                        self.create_show(booking_link, cinema, movie, date, show_time)
 
 
 class HeliosScrapeStore(BaseScrapeStore):
@@ -90,50 +175,67 @@ class HeliosScrapeStore(BaseScrapeStore):
     Scrape and store movie data from the Helios website.
     """
     def __init__(self, cities):
+        """
+        Initialize the HeliosScrapeStore.
+
+        Args:
+            cities (dict): Dictionary of cities and cinema numbers to scrape movie data for.
+        """
         super().__init__(cities, 'helios')
-        self.scraper = HeliosScraper()
+
+    def create_scraper(self):
+        """
+        Create and return the HeliosScraper object.
+        """
+        return HeliosScraper()
+
+    def get_dates(self):
+        """
+        Get a list of dates for which to scrape movie data.
+        """
+        today = datetime.today()
+        return [add_days(today, i).strftime('%Y-%m-%d') for i in range(self.AMOUNT_OF_DAYS)]
+
+    def create_movie(self, movie_info):
+        """
+        Create and return a Movie object.
+
+        Args:
+            movie_info (dict): Information about the movie.
+
+        Returns:
+            Movie: The created or retrieved Movie object.
+        """
+        movie, _ = Movie.objects.get_or_create(
+            title=movie_info['title'],
+        )
+        return movie
 
     def scrape_and_store_data(self):
         """
-        Scrape and store movie data from the Helios website for multiple cities and dates.
+        Scrape movie data from the Helios website for the specified cities, dates, and cinema numbers,
+        and store it in the database.
         """
-        today = datetime.today()
-        dates = {add_days(today, i).strftime('%Y-%m-%d'): i for i in range(self.AMOUNT_OF_DAYS)}
-        for date in dates:
-            data_number = dates[date]
-
-            for city_name in self.cities:
-                cinema_number_in_city = self.cities[city_name]
-                movie_info_list = self.scraper.get_movie_info(city_name, data_number, cinema_number_in_city)
+        for date, day_numb in self.get_dates().items():
+            for city_name, cinema_num_in_city in self.cities.items():
+                movie_info_list = self.scraper.get_movie_info(city_name, day_numb, cinema_num_in_city)
 
                 for movie_info in movie_info_list:
                     for show_info in movie_info['show_info']:
                         show_time = datetime.strptime(show_info['hour'], '%H:%M').time()
                         booking_link = show_info['booking_link']
-                        cinema, _ = Cinema.objects.get_or_create(
-                            name=self.cinema_name,
-                            city=city_name
-                        )
-
-                        movie, _ = Movie.objects.get_or_create(
-                            title=movie_info['title'],
-                        )
-
-                        Show.objects.get_or_create(
-                            booking_link=booking_link,
-                            defaults={
-                                'cinema': cinema,
-                                'movie': movie,
-                                'date': date,
-                                'time': show_time,
-                            },
-                        )
+                        cinema = self.create_cinema(city_name)
+                        movie = self.create_movie(movie_info)
+                        self.create_show(booking_link, cinema, movie, date, show_time)
 
 
 @shared_task
 def scrape_and_store_multikino(cities):
     """
     Celery task for scraping and storing movie data from Multikino website.
+
+    Args:
+        cities (list): List of cities to scrape movie data for.
     """
     scraper = MultikinoScrapeStore(cities)
     scraper.scrape_and_store_data()
@@ -143,6 +245,9 @@ def scrape_and_store_multikino(cities):
 def scrape_and_store_helios(cities):
     """
     Celery task for scraping and storing movie data from Helios website.
+
+    Args:
+        cities (dict): Dictionary of cities and cinema numbers to scrape movie data for.
     """
     scraper = HeliosScrapeStore(cities)
     scraper.scrape_and_store_data()
