@@ -22,11 +22,10 @@ logging.basicConfig(filename='movie_scraper.log', level=logging.ERROR,
 logger = logging.getLogger(__name__)
 
 
-class BaseMovieScraper(ABC):
+class WebDriverManager:
     """
-    Abstract base class for movie scrapers.
+    Class for initializing and cleaning up the Chrome driver.
     """
-    URL_FORMAT = None
 
     @contextmanager
     def get_chrome_driver(self):
@@ -45,6 +44,13 @@ class BaseMovieScraper(ABC):
             yield driver
         finally:
             driver.quit()
+
+
+class BaseMovieScraper(ABC, WebDriverManager):
+    """
+    Abstract base class for movie scrapers.
+    """
+    URL_FORMAT = None
 
     @abstractmethod
     def get_movie_info(self, city, showing_date):
