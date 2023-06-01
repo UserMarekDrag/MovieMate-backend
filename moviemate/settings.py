@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+import json
 from pathlib import Path
 from decouple import config
 from celery.schedules import crontab
@@ -162,14 +163,22 @@ CELERY_RESULT_BACKEND = 'django-db'
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 
+
+# Load cities from JSON
+with open('cities.json', 'r') as f:
+    CITIES = json.load(f)
+
+
 # Celery beat schedule
 CELERY_BEAT_SCHEDULE = {
     'scrape_and_store_data_multikino': {
-        'task': 'scraper.tasks.scrape_and_store_data_multikino',
-        'schedule': crontab(hour=18, minute=10),
+        'task': 'scraper.tasks.scrape_and_store_multikino',
+        'schedule': crontab(hour=20, minute=5),
+        'args': (CITIES['multikino'],),
     },
     'scrape_and_store_data_helios': {
-        'task': 'scraper.tasks.scrape_and_store_data_helios',
-        'schedule': crontab(hour=18, minute=15),
+        'task': 'scraper.tasks.scrape_and_store_helios',
+        'schedule': crontab(hour=20, minute=10),
+        'args': (CITIES['helios'],),
     },
 }

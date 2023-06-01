@@ -1,0 +1,9 @@
+{
+    "multikino": ["kielce", "gdansk", "krakow", "lublin"],
+    "helios": {
+        "kielce": 13,
+        "sosnowiec": 22,
+        "poznan": 50,
+        "bydgoszcz": 38
+    }
+}
