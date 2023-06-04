@@ -1,14 +1,15 @@
 from rest_framework import serializers
 from django.utils import timezone
 from scraper.models import Cinema, Movie, Show
+from .models import SearchHistory
 
 
-class MovieSerializer(serializers.ModelSerializer):
+class SearchHistorySerializer(serializers.ModelSerializer):
     """
     Serializer for the Movie model.
     """
     class Meta:
-        model = Movie
+        model = SearchHistory
         fields = ['id', 'user', 'city', 'showing_date', 'created_date']
         read_only_fields = ['id', 'user', 'created_date']
 

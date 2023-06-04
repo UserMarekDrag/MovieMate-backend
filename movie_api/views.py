@@ -1,11 +1,12 @@
-from .models import Movie
+from .models import SearchHistory
 from scraper.models import Show
-from .serializers import MovieSerializer, ShowSerializer
+from .serializers import MovieSerializer, ShowSerializer, SearchHistorySerializer
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from rest_framework import generics
 from django_filters.rest_framework import DjangoFilterBackend
+from django.utils import timezone
 
 
 @api_view(['GET'])
@@ -29,8 +30,8 @@ def movie_list(request):
     """
     Returns a list of movies.
     """
-    queryset = Movie.objects.all()
-    serializer = MovieSerializer(queryset, many=True)
+    queryset = SearchHistory.objects.all()
+    serializer = SearchHistorySerializer(queryset, many=True)
     return Response(serializer.data)
 
 
@@ -39,8 +40,8 @@ def movie_detail(request, pk):
     """
     Returns details of a specific movie.
     """
-    queryset = Movie.objects.get(id=pk)
-    serializer = MovieSerializer(queryset, many=False)
+    queryset = SearchHistory.objects.get(id=pk)
+    serializer = SearchHistorySerializer(queryset, many=False)
     return Response(serializer.data)
 
 
@@ -49,7 +50,7 @@ def movie_create(request):
     """
     Creates a new movie.
     """
-    serializer = MovieSerializer(data=request.data)
+    serializer = SearchHistorySerializer(data=request.data)
 
     if serializer.is_valid():
         serializer.save()
@@ -62,8 +63,8 @@ def movie_update(request, pk):
     """
     Updates an existing movie.
     """
-    queryset = Movie.objects.get(id=pk)
-    serializer = MovieSerializer(instance=queryset, data=request.data)
+    queryset = SearchHistory.objects.get(id=pk)
+    serializer = SearchHistorySerializer(instance=queryset, data=request.data)
 
     if serializer.is_valid():
         serializer.save()
@@ -76,7 +77,7 @@ def movie_delete(request, pk):
     """
     Deletes a movie.
     """
-    queryset = Movie.objects.get(id=pk)
+    queryset = SearchHistory.objects.get(id=pk)
     queryset.delete()
 
     return Response('Item successfully deleted!')
@@ -91,3 +92,24 @@ class ShowList(generics.ListAPIView):
     serializer_class = ShowSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['cinema__city', 'date']
+
+    def list(self, request, *args, **kwargs):
+        response = super().list(request, *args, **kwargs)
+
+        # Get user if logged in
+        user = request.user if request.user.is_authenticated else None
+
+        # Get city and showing date from request if available
+        city = request.query_params.get('cinema__city')
+        showing_date = request.query_params.get('date')
+
+        # Only save search history if city or date were part of the request
+        if city or showing_date:
+            SearchHistory.objects.create(
+                user=user,
+                city=city,
+                showing_date=showing_date,
+                created_date=timezone.now()
+            )
+
+        return response
