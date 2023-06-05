@@ -1,86 +1,68 @@
-from .models import SearchHistory
-from scraper.models import Show
-from .serializers import MovieSerializer, ShowSerializer, SearchHistorySerializer
-from rest_framework.decorators import api_view
+from rest_framework import generics
+from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
-from rest_framework import generics
 from django_filters.rest_framework import DjangoFilterBackend
 from django.utils import timezone
+from .models import SearchHistory
+from scraper.models import Show
+from .serializers import ShowSerializer, SearchHistorySerializer
 
 
-@api_view(['GET'])
-def api_overview(request):
+class ApiOverview(APIView):
     """
     Returns an overview of available API endpoints.
     """
-    api_urls = {
-        'List': '/movie-list/',
-        'Detail View': '/movie-detail/<str:pk>/',
-        'Create': '/movie-create/',
-        'Update': '/movie-update/<str:pk>',
-        'Delete': '/movie-delete/<str:pk>',
-    }
+    def get(self, request):
+        api_urls = {
+            'List': '/movie-list/',
+            'Detail View': '/movie-detail/<str:pk>/',
+            'Create': '/movie-create/',
+            'Update': '/movie-update/<str:pk>',
+            'Delete': '/movie-delete/<str:pk>',
+        }
 
-    return Response(api_urls)
+        return Response(api_urls)
 
 
-@api_view(['GET'])
-def movie_list(request):
+class MovieList(generics.ListAPIView):
     """
     Returns a list of movies.
     """
     queryset = SearchHistory.objects.all()
-    serializer = SearchHistorySerializer(queryset, many=True)
-    return Response(serializer.data)
+    serializer_class = SearchHistorySerializer
 
 
-@api_view(['GET'])
-def movie_detail(request, pk):
+class MovieDetail(generics.RetrieveAPIView):
     """
     Returns details of a specific movie.
     """
-    queryset = SearchHistory.objects.get(id=pk)
-    serializer = SearchHistorySerializer(queryset, many=False)
-    return Response(serializer.data)
+    queryset = SearchHistory.objects.all()
+    serializer_class = SearchHistorySerializer
 
 
-@api_view(['POST'])
-def movie_create(request):
+class MovieCreate(generics.CreateAPIView):
     """
     Creates a new movie.
     """
-    serializer = SearchHistorySerializer(data=request.data)
-
-    if serializer.is_valid():
-        serializer.save()
-
-    return Response(serializer.data)
+    queryset = SearchHistory.objects.all()
+    serializer_class = SearchHistorySerializer
 
 
-@api_view(['POST'])
-def movie_update(request, pk):
+class MovieUpdate(generics.UpdateAPIView):
     """
     Updates an existing movie.
     """
-    queryset = SearchHistory.objects.get(id=pk)
-    serializer = SearchHistorySerializer(instance=queryset, data=request.data)
-
-    if serializer.is_valid():
-        serializer.save()
-
-    return Response(serializer.data)
+    queryset = SearchHistory.objects.all()
+    serializer_class = SearchHistorySerializer
 
 
-@api_view(['DELETE'])
-def movie_delete(request, pk):
+class MovieDelete(generics.DestroyAPIView):
     """
     Deletes a movie.
     """
-    queryset = SearchHistory.objects.get(id=pk)
-    queryset.delete()
-
-    return Response('Item successfully deleted!')
+    queryset = SearchHistory.objects.all()
+    serializer_class = SearchHistorySerializer
 
 
 class ShowList(generics.ListAPIView):

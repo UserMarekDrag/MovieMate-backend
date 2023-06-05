@@ -1,14 +1,13 @@
 from django.urls import path
-from . import views
-from .views import ShowList
+from .views import ShowList, ApiOverview, MovieList, MovieDetail, MovieCreate, MovieUpdate, MovieDelete
 
 
 urlpatterns = [
-    path('', views.api_overview, name='api-overview'),
-    path('movie-list/', views.movie_list, name='movie-list'),
-    path('movie-detail/<str:pk>/', views.movie_detail, name='movie-detail'),
-    path('movie-create/', views.movie_create, name='movie-create'),
-    path('movie-update/<str:pk>/', views.movie_update, name='movie-update'),
-    path('movie-delete/<str:pk>/', views.movie_delete, name='movie-delete'),
+    path('', ApiOverview.as_view(), name='api-overview'),
+    path('movie-list/', MovieList.as_view(), name='movie-list'),
+    path('movie-detail/<str:pk>/', MovieDetail.as_view(), name='movie-detail'),
+    path('movie-create/', MovieCreate.as_view(), name='movie-create'),
+    path('movie-update/<str:pk>/', MovieUpdate.as_view(), name='movie-update'),
+    path('movie-delete/<str:pk>/', MovieDelete.as_view(), name='movie-delete'),
     path('cinemas_in_city/', ShowList.as_view(), name='cinema_in_city_list'),
 ]
