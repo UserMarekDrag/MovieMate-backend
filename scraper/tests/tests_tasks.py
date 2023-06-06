@@ -61,6 +61,7 @@ class TestMultikinoScrapeStore(TestCase):
         dates = self.multikino.get_dates()
         self.assertEqual(len(dates), self.multikino.AMOUNT_OF_DAYS)
         self.assertIsInstance(dates[0], str)
+        print(dates)
 
     def test_create_cinema(self):
         """
@@ -96,7 +97,11 @@ class TestHeliosScrapeStore(TestCase):
         """
         dates = self.helios.get_dates()
         self.assertEqual(len(dates), self.helios.AMOUNT_OF_DAYS)
-        self.assertIsInstance(dates[0], str)
+
+        for key, value in dates.items():
+            self.assertIsInstance(key, str)
+            datetime.strptime(key, '%Y-%m-%d')
+            self.assertIsInstance(value, int)
 
     def test_create_cinema(self):
         """

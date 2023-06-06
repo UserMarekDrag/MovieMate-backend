@@ -158,8 +158,11 @@ class MultikinoScrapeStore(BaseScrapeStore):
         and store it in the database.
         """
         for date in self.get_dates():
+            # Convert the date to 'DD-MM-YYYY' format for MultikinoScraper
+            formatted_date = datetime.strptime(date, '%Y-%m-%d').strftime('%d-%m-%Y')
+
             for city_name in self.cities:
-                movie_info_list = self.scraper.get_movie_info(city_name, date)
+                movie_info_list = self.scraper.get_movie_info(city_name, formatted_date)
 
                 for movie_info in movie_info_list:
                     for show_info in movie_info['show_info']:
@@ -191,10 +194,10 @@ class HeliosScrapeStore(BaseScrapeStore):
 
     def get_dates(self):
         """
-        Get a list of dates for which to scrape movie data.
+        Get a dictionary of dates and the number of days from today for which to scrape movie data.
         """
         today = datetime.today()
-        return [add_days(today, i).strftime('%Y-%m-%d') for i in range(self.AMOUNT_OF_DAYS)]
+        return {add_days(today, i).strftime('%Y-%m-%d'): i for i in range(self.AMOUNT_OF_DAYS)}
 
     def create_movie(self, movie_info):
         """
