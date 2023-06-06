@@ -18,7 +18,7 @@ class SearchHistorySerializer(serializers.ModelSerializer):
         Check that the showing_date is not in the past.
         """
         showing_date = data['showing_date']
-        if showing_date <= timezone.now():
+        if showing_date <= timezone.now().date():
             raise serializers.ValidationError("Showing date cannot be in the past.")
         return data
 

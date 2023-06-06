@@ -7,6 +7,7 @@ from mixer.backend.django import mixer
 from movie_api.serializers import SearchHistorySerializer
 import json
 from user_api.models import AppUser
+from rest_framework.test import force_authenticate
 
 
 class MovieListViewTest(TestCase):
@@ -81,3 +82,44 @@ class ShowListViewTest(TestCase):
         force_authenticate(request, user=self.user)
         response = self.view(request)
         self.assertEqual(response.status_code, 200, 'Expected Response Code 200, received {0} instead.'.format(response.status_code))
+
+
+class ApiOverviewTest(TestCase):
+    """Test suite for the ApiOverview view."""
+
+    def setUp(self):
+        """Create test user, setup API request factory, and ApiOverview view."""
+        self.factory = APIRequestFactory()
+        self.view = ApiOverview.as_view()
+        self.uri = '/api-overview/'
+        self.user = AppUser.objects.create_user(email='jacob@example.com', username='jacob', password='top_secret')
+
+    def test_api_overview(self):
+        """Test for checking API overview. Ensures that the response code is 200."""
+        request = self.factory.get(self.uri)
+        force_authenticate(request, user=self.user)
+        response = self.view(request)
+        self.assertEqual(response.status_code, 200, 'Expected Response Code 200, received {0} instead.'.format(response.status_code))
+
+
+class MovieCreateViewTest(TestCase):
+    """Test suite for the MovieCreate view."""
+
+    def setUp(self):
+        """Create test user, setup API request factory, MovieCreate view, and sample movie data."""
+        self.factory = APIRequestFactory()
+        self.view = MovieCreate.as_view()
+        self.uri = '/movie-create/'
+        self.user = AppUser.objects.create_user(email='jacob@example.com', username='jacob', password='top_secret')
+        self.data = {
+            "city": "Test city",
+            "showing_date": "2050-06-03"
+        }
+
+    def test_create_movie(self):
+        """Test for creating a new movie. Ensures that the response code is 201."""
+        request = self.factory.post(self.uri, data=json.dumps(self.data), content_type='application/json')
+        force_authenticate(request, user=self.user)
+        response = self.view(request)
+        response.render()
+        self.assertEqual(response.status_code, 201, 'Expected Response Code 201, received {0} instead.'.format(response.status_code))
