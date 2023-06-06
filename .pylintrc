@@ -1,0 +1,12 @@
+[MASTER]
+load-plugins=pylint_django
+
+[PYLINT]
+disable=
+    # Django requires dynamic attributes in models
+    no-member,
+    # Django templates do not always have .html extensions
+    invalid-template-variables,
+
+[pylint_django]
+django-settings-module=moviemate.settings
