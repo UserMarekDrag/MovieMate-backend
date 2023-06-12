@@ -1,3 +1,6 @@
+"""
+This module makes the app package importable and initializes the celery app on import.
+"""
 # The 'absolute_import' helps avoid confusion between relative and absolute imports,
 # and 'unicode_literals' ensures that all string literals in this module are unicode.
 from __future__ import absolute_import, unicode_literals

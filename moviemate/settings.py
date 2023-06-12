@@ -34,7 +34,7 @@ CORS_AllOWED_HOSTS = [
     'http://localhost:3000',
     'http://127.0.0.1:3000',
 ]
-CORS_AllOWED_CREDENTIALS = True
+CORS_ALLOWED_CREDENTIALS = True
 
 
 # Application definition
@@ -165,7 +165,7 @@ CELERY_TASK_SERIALIZER = 'json'
 
 
 # Load cities from JSON
-with open('cities.json', 'r') as f:
+with open('cities.json', 'r', encoding='utf-8') as f:
     CITIES = json.load(f)
 
 
