@@ -1,12 +1,18 @@
 [MASTER]
 load-plugins=pylint_django
+ignore=migrations
 
-[PYLINT]
+[MESSAGES CONTROL]
 disable=
     # Django requires dynamic attributes in models
     no-member,
-    # Django templates do not always have .html extensions
-    invalid-template-variables,
+    # Sometimes it's ok to have unused imports in the Django admin
+    missing-module-docstring,
+    # Sometimes in Django, arguments need to be renamed for overriding methods
+    arguments-renamed
+
+[FORMAT]
+max-line-length=120
 
 [pylint_django]
 django-settings-module=moviemate.settings
