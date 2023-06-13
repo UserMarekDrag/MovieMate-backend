@@ -1,9 +1,9 @@
-from django.test import TestCase
-from movie_api.models import SearchHistory
-from scraper.models import Cinema, Movie, Show
-from movie_api.serializers import SearchHistorySerializer, CinemaSerializer, MovieSerializer, ShowSerializer
-from rest_framework.exceptions import ValidationError
 from datetime import datetime, timedelta
+from django.test import TestCase
+from rest_framework.exceptions import ValidationError
+from scraper.models import Cinema, Movie, Show
+from movie_api.models import SearchHistory
+from movie_api.serializers import SearchHistorySerializer, CinemaSerializer, MovieSerializer, ShowSerializer
 
 
 class MovieSerializerTest(TestCase):

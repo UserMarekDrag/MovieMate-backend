@@ -1,13 +1,10 @@
-from django.test import TestCase, RequestFactory
-from django.contrib.auth.models import AnonymousUser
-from movie_api.models import SearchHistory
-from movie_api.views import MovieList, MovieDetail, MovieCreate, MovieDelete, ShowList, ApiOverview
-from rest_framework.test import APIRequestFactory, force_authenticate
-from mixer.backend.django import mixer
-from movie_api.serializers import SearchHistorySerializer
 import json
-from user_api.models import AppUser
+from django.test import TestCase
+from rest_framework.test import APIRequestFactory
 from rest_framework.test import force_authenticate
+from mixer.backend.django import mixer
+from movie_api.views import MovieList, MovieDetail, MovieCreate, MovieDelete, ShowList, ApiOverview
+from user_api.models import AppUser
 
 
 class MovieListViewTest(TestCase):
@@ -25,7 +22,8 @@ class MovieListViewTest(TestCase):
         request = self.factory.get(self.uri)
         force_authenticate(request, user=self.user)
         response = self.view(request)
-        self.assertEqual(response.status_code, 200, 'Expected Response Code 200, received {0} instead.'.format(response.status_code))
+        self.assertEqual(response.status_code, 200,
+                         f'Expected Response Code 200, received {response.status_code} instead.')
 
 
 class MovieDetailViewTest(TestCase):
@@ -44,7 +42,8 @@ class MovieDetailViewTest(TestCase):
         request = self.factory.get(self.uri+str(self.search_history.id)+'/')
         force_authenticate(request, user=self.user)
         response = self.view(request, pk=self.search_history.id)
-        self.assertEqual(response.status_code, 200, 'Expected Response Code 200, received {0} instead.'.format(response.status_code))
+        self.assertEqual(response.status_code, 200,
+                         f'Expected Response Code 200, received {response.status_code} instead.')
 
 
 class MovieDeleteViewTest(TestCase):
@@ -63,7 +62,8 @@ class MovieDeleteViewTest(TestCase):
         request = self.factory.delete(self.uri+str(self.search_history.id)+'/')
         force_authenticate(request, user=self.user)
         response = self.view(request, pk=self.search_history.id)
-        self.assertEqual(response.status_code, 204, 'Expected Response Code 204, received {0} instead.'.format(response.status_code))
+        self.assertEqual(response.status_code, 204,
+                         f'Expected Response Code 204, received {response.status_code} instead.')
 
 
 class ShowListViewTest(TestCase):
@@ -81,7 +81,8 @@ class ShowListViewTest(TestCase):
         request = self.factory.get(self.uri)
         force_authenticate(request, user=self.user)
         response = self.view(request)
-        self.assertEqual(response.status_code, 200, 'Expected Response Code 200, received {0} instead.'.format(response.status_code))
+        self.assertEqual(response.status_code, 200,
+                         f'Expected Response Code 200, received {response.status_code} instead.')
 
 
 class ApiOverviewTest(TestCase):
@@ -99,7 +100,8 @@ class ApiOverviewTest(TestCase):
         request = self.factory.get(self.uri)
         force_authenticate(request, user=self.user)
         response = self.view(request)
-        self.assertEqual(response.status_code, 200, 'Expected Response Code 200, received {0} instead.'.format(response.status_code))
+        self.assertEqual(response.status_code, 200,
+                         f'Expected Response Code 200, received {response.status_code} instead.')
 
 
 class MovieCreateViewTest(TestCase):
@@ -122,4 +124,5 @@ class MovieCreateViewTest(TestCase):
         force_authenticate(request, user=self.user)
         response = self.view(request)
         response.render()
-        self.assertEqual(response.status_code, 201, 'Expected Response Code 201, received {0} instead.'.format(response.status_code))
+        self.assertEqual(response.status_code, 201,
+                         f'Expected Response Code 201, received {response.status_code} instead.')
