@@ -4,7 +4,7 @@ from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 
 
 class AppUserManager(BaseUserManager):
-    def create_user(self, email, username, password=None):
+    def create_user(self, email, username, password=None, is_staff=False, is_superuser=False):
         if not email:
             raise ValueError('An email is required.')
         if not username:
@@ -12,7 +12,7 @@ class AppUserManager(BaseUserManager):
         if not password:
             raise ValueError('A password is required.')
         email = self.normalize_email(email)
-        user = self.model(email=email, username=username)
+        user = self.model(email=email, username=username, is_staff=is_staff, is_superuser=is_superuser)
         user.set_password(password)
         user.save()
         return user
@@ -24,8 +24,7 @@ class AppUserManager(BaseUserManager):
             raise ValueError('A username is required.')
         if not password:
             raise ValueError('A password is required.')
-        user = self.create_user(email, username, password)
-        user.is_superuser = True
+        user = self.create_user(email, username, password, is_staff=True, is_superuser=True)
         user.save()
         return user
 
@@ -34,6 +33,7 @@ class AppUser(AbstractBaseUser, PermissionsMixin):
     user_id = models.AutoField(primary_key=True)
     email = models.EmailField(max_length=50, unique=True)
     username = models.CharField(max_length=50)
+    is_staff = models.BooleanField(default=False)
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
     objects = AppUserManager()
