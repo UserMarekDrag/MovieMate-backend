@@ -3,6 +3,9 @@ from user_api.models import AppUser
 
 
 class UserManagerTestCase(TestCase):
+    """
+    Test case for the user manager methods.
+    """
     def setUp(self):
         """
         Set up the test by creating user instances.

@@ -4,6 +4,9 @@ from user_api.models import AppUser
 
 
 class UserSerializerTestCase(TestCase):
+    """
+    Test case for the user serializers.
+    """
     def setUp(self):
         """
         Set up the test by creating a user instance and serializer.
@@ -26,6 +29,9 @@ class UserSerializerTestCase(TestCase):
 
 
 class UserRegisterSerializerTestCase(TestCase):
+    """
+    Test case for the user registration serializers.
+    """
     def setUp(self):
         """
         Set up the test by creating a user data dictionary and serializer.
@@ -49,6 +55,9 @@ class UserRegisterSerializerTestCase(TestCase):
 
 
 class UserLoginSerializerTestCase(TestCase):
+    """
+    Test case for the user login serializers.
+    """
     def setUp(self):
         """
         Set up the test by creating a user instance, login data dictionary, and serializer.

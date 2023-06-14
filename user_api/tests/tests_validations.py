@@ -5,6 +5,9 @@ from user_api.validations import custom_validation, validate_email, validate_use
 
 
 class CustomValidationTestCase(TestCase):
+    """
+    Test case for the custom validation.
+    """
     def setUp(self):
         """
         Set up the test by creating a user instance.
@@ -43,6 +46,9 @@ class CustomValidationTestCase(TestCase):
 
 
 class ValidationMethodsTestCase(TestCase):
+    """
+    Test case for the validation methods.
+    """
     def setUp(self):
         """
         Set up the test by creating valid and invalid data dictionaries.
