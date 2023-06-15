@@ -23,7 +23,8 @@ class MovieModelTest(TestCase):
         """
         Test case for creating a Movie object.
         """
-        movie = Movie.objects.create(title='Movie Test', category='Action', description='Description Test', image_url='www.test.com')
+        movie = Movie.objects.create(
+            title='Movie Test', category='Action', description='Description Test', image_url='www.test.com')
         self.assertEqual(movie.title, 'Movie Test')
         self.assertEqual(movie.category, 'Action')
         self.assertEqual(movie.description, 'Description Test')
@@ -39,8 +40,10 @@ class ShowModelTest(TestCase):
         Test case for creating a Show object.
         """
         cinema = Cinema.objects.create(name='Cinema Test', city='City Test')
-        movie = Movie.objects.create(title='Movie Test', category='Action', description='Description Test', image_url='www.test.com')
-        show = Show.objects.create(cinema=cinema, movie=movie, date='2023-06-01', time='13:00:00', booking_link='www.test.com')
+        movie = Movie.objects.create(
+            title='Movie Test', category='Action', description='Description Test', image_url='www.test.com')
+        show = Show.objects.create(
+            cinema=cinema, movie=movie, date='2023-06-01', time='13:00:00', booking_link='www.test.com')
         self.assertEqual(show.cinema, cinema)
         self.assertEqual(show.movie, movie)
         self.assertEqual(show.date, '2023-06-01')

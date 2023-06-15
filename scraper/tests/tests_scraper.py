@@ -84,13 +84,18 @@ class TestWebDriverManager(TestCase):
 class TestBaseMovieScraper(TestCase):
     """
     Test class for the BaseMovieScraper class.
+    This class tests the abstract methods of the BaseMovieScraper class.
     """
     def test_get_movie_info_not_implemented(self):
         """
         Test case to check that get_movie_info raises NotImplementedError.
         """
         class FakeScraper(BaseMovieScraper):
-            pass
+            """
+            A mock scraper class to test abstract methods from the BaseMovieScraper class.
+            """
+            def get_movie_info(self, city, date):
+                raise NotImplementedError("This method should be overridden in a subclass.")
 
         with self.assertRaises(TypeError):
             FakeScraper().get_movie_info("city", "date")
