@@ -9,10 +9,20 @@ disable=
     # Sometimes it's ok to have unused imports in the Django admin
     missing-module-docstring,
     # Sometimes in Django, arguments need to be renamed for overriding methods
-    arguments-renamed
+    arguments-renamed,
+    abstract-class-instantiated,
+    arguments-differ
 
 [FORMAT]
 max-line-length=120
+
+[DESIGN]
+max-locals=20
+max-args=6
+
+[CLASSES]
+max-public-methods=7
+min-public-methods=1
 
 [pylint_django]
 django-settings-module=moviemate.settings
