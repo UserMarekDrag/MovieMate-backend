@@ -1,3 +1,4 @@
+import logging
 from abc import ABC, abstractmethod
 from contextlib import contextmanager
 from selenium import webdriver
@@ -7,8 +8,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 from bs4 import BeautifulSoup
-import logging
-
 
 # Constants
 CHROMEDRIVER_PATH = 'chromedriver'
@@ -26,7 +25,6 @@ class WebDriverManager:
     """
     Class for initializing and cleaning up the Chrome driver.
     """
-
     @contextmanager
     def get_chrome_driver(self):
         """
@@ -53,11 +51,11 @@ class BaseMovieScraper(ABC, WebDriverManager):
     URL_FORMAT = None
 
     @abstractmethod
-    def get_movie_info(self, city, showing_date):
+    def get_movie_info(self, city, showing_date, cinema_numb=None):
         """
         Abstract method for getting movie information.
         """
-        pass
+        raise NotImplementedError
 
 
 class MultikinoScraper(BaseMovieScraper):
@@ -66,7 +64,7 @@ class MultikinoScraper(BaseMovieScraper):
     """
     URL_FORMAT = MULTIKINO_URL_FORMAT
 
-    def get_movie_info(self, city, showing_date):
+    def get_movie_info(self, city, showing_date, cinema_numb=None):
         """
         This function uses Selenium and BeautifulSoup to scrape the Multikino website
         and get information about movies that are currently playing in the given city
@@ -134,8 +132,9 @@ class MultikinoScraper(BaseMovieScraper):
                         'show_info': show_info
                     })
 
-        except (WebDriverException, AttributeError) as e:
-            logger.error(f"Error occurred: {str(e)}")
+        except (WebDriverException, AttributeError) as error:
+
+            logger.error("Error occurred: %s", str(error))
 
         return movie_info_list_multikino
 
@@ -197,7 +196,7 @@ class HeliosScraper(BaseMovieScraper):
                             'show_info': show_info
                         })
 
-        except (WebDriverException, AttributeError) as e:
-            logger.error(f"Error occurred: {str(e)}")
+        except (WebDriverException, AttributeError) as error:
+            logger.error("Error occurred: %s", str(error))
 
         return movie_info_list_helios

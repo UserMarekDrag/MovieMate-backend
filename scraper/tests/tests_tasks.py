@@ -30,7 +30,15 @@ class TestBaseMovieScraper(TestCase):
         Test case to check that get_movie_info raises NotImplementedError.
         """
         class FakeMovieScraper(BaseScrapeStore):
-            pass
+            """This is a fake Movie Scraper used for testing."""
+            def create_scraper(self):
+                pass
+
+            def get_dates(self):
+                pass
+
+            def scrape_and_store_data(self):
+                pass
 
         with self.assertRaises(TypeError):
             FakeMovieScraper(["city"], "date").create_scraper()
@@ -61,7 +69,6 @@ class TestMultikinoScrapeStore(TestCase):
         dates = self.multikino.get_dates()
         self.assertEqual(len(dates), self.multikino.AMOUNT_OF_DAYS)
         self.assertIsInstance(dates[0], str)
-        print(dates)
 
     def test_create_cinema(self):
         """

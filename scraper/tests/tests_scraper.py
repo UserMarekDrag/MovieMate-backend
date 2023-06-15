@@ -29,7 +29,7 @@ class TestLogging(TestCase):
             pass
 
         # Assert
-        mock_logging_error.assert_called_with('Error occurred: Message: Test exception\n')
+        mock_logging_error.assert_called_with('Error occurred: %s', 'Message: Test exception\n')
 
 
 class TestHeliosScraperLogging(TestCase):
@@ -56,7 +56,7 @@ class TestHeliosScraperLogging(TestCase):
             pass
 
         # Assert
-        mock_logging_error.assert_called_with('Error occurred: Message: Test exception\n')
+        mock_logging_error.assert_called_with('Error occurred: %s', 'Message: Test exception\n')
 
 
 class TestWebDriverManager(TestCase):
@@ -94,10 +94,10 @@ class TestBaseMovieScraper(TestCase):
             """
             A mock scraper class to test abstract methods from the BaseMovieScraper class.
             """
-            def get_movie_info(self, city, date):
+            def get_movie_info(self, city, date, cinema_numb=None):
                 raise NotImplementedError("This method should be overridden in a subclass.")
 
-        with self.assertRaises(TypeError):
+        with self.assertRaises(NotImplementedError):
             FakeScraper().get_movie_info("city", "date")
 
 

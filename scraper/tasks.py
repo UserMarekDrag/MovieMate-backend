@@ -1,8 +1,9 @@
 from abc import ABC, abstractmethod
 from datetime import datetime, timedelta
+from celery import shared_task
+
 from .models import Cinema, Movie, Show
 from .scraper import MultikinoScraper, HeliosScraper
-from celery import shared_task
 
 
 def add_days(today, num_of_days):
@@ -42,14 +43,12 @@ class BaseScrapeStore(ABC):
         """
         Create and return the scraper object.
         """
-        pass
 
     @abstractmethod
     def get_dates(self):
         """
         Get a list of dates for which to scrape movie data.
         """
-        pass
 
     def create_cinema(self, city_name):
         """
@@ -72,7 +71,6 @@ class BaseScrapeStore(ABC):
         """
         Scrape movie data for the specified cities and dates, and store it in the database.
         """
-        pass
 
     @abstractmethod
     def create_movie(self, movie_info):
@@ -82,7 +80,6 @@ class BaseScrapeStore(ABC):
         Args:
             movie_info (dict): Information about the movie.
         """
-        pass
 
     def create_show(self, booking_link, cinema, movie, date, show_time):
         """
