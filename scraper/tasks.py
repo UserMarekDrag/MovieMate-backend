@@ -222,7 +222,10 @@ class HeliosScrapeStore(BaseScrapeStore):
 
                 for movie_info in movie_info_list:
                     for show_info in movie_info['show_info']:
-                        show_time = datetime.strptime(show_info['hour'], '%H:%M').time()
+                        try:
+                            show_time = datetime.strptime(show_info['hour'], '%H:%M').time()
+                        except ValueError:
+                            continue
                         booking_link = show_info['booking_link']
                         cinema = self.create_cinema(city_name)
                         movie = self.create_movie(movie_info)
