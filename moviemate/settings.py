@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'scraper',
     'django_celery_results',
     'django_filters',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
