@@ -10,3 +10,7 @@ working/
 __pycache__/
 *.swp
 *.env
+
+# Ignore unit tests report folder
+htmlcov/
+*.coverage

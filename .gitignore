@@ -9,3 +9,5 @@ working
 media
 logs
 *.log
+htmlcov
+.coverage
