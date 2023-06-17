@@ -18,7 +18,7 @@ class ApiOverview(APIView):
         Listing API endpoints.
         """
         api_urls = {
-            'List': '/movie-list/',
+            'List': '/movie-history-list/',
             'Detail View': '/movie-detail/<str:pk>/',
             'Create': '/movie-create/',
             'Update': '/movie-update/<str:pk>',
@@ -31,7 +31,7 @@ class ApiOverview(APIView):
 
 class MovieList(generics.ListAPIView):
     """
-    Returns a list of movies.
+    Returns a list of movie searches.
     """
     queryset = SearchHistory.objects.all()
     serializer_class = SearchHistorySerializer
