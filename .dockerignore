@@ -14,3 +14,6 @@ __pycache__/
 # Ignore unit tests report folder
 htmlcov/
 *.coverage
+
+# Ignore documentation report folder
+docs/build/
