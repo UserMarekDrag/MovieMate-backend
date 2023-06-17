@@ -85,6 +85,11 @@ Current Pylint ratings are:
 ### API Endpoints
 Our API allows you to interact with MovieMate in a programmatic way. Please check [API.md](API.md) for more details about the available endpoints.
 
+To generate a new openapi.json file, run:
+```bash 
+curl http://localhost:8000/swagger.json > docs/openapi.json
+```
+
 ### Frontend Repository
 The frontend repository contains the client-side code for the MovieMade application. It uses React to build the user interface.
 
