@@ -55,7 +55,7 @@ services:
       - "15672:15672"  # Management UI
 
   # Service for the Django web application
-  web:
+  backend:
 
     # Build the Docker image for the web service using the Dockerfile in the current directory
     build:
@@ -123,6 +123,24 @@ services:
     depends_on:
       - db
       - rabbit
+
+  # Service for the Nginx web server
+  nginx:
+    # Use the latest official Nginx Docker image from Docker Hub
+    image: nginx:latest
+
+    # Mount the local directory 'nginx' to '/etc/nginx/conf.d' in the container,
+    # which is the directory Nginx looks at for its server configuration files
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+
+    # Expose the web server port 80 and map it to port 8082 on the host
+    ports:
+      - "8082:80"
+
+    # Depend on the backend service so that it starts first
+    depends_on:
+      - backend
 
 # Define named volumes for data storage
 volumes:
