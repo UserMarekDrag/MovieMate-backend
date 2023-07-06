@@ -183,6 +183,9 @@ class HeliosScraper(BaseMovieScraper):
                     title = soup_item.find('h2', {'class': 'movie-title'}).find('a',
                                                                                 {'class': 'movie-link'}).text.strip()
 
+                    # Get the image URL
+                    img_url = soup_item.find('img').get('src')
+
                     show_info = [{
                         'hour': time.find('a', {'class': 'hour-link fancybox-reservation'}).text.strip(),
                         'booking_link': 'https://helios.pl' + time.find('a')['href']
@@ -193,6 +196,7 @@ class HeliosScraper(BaseMovieScraper):
                         # Append the extracted info to movie_info_list
                         movie_info_list_helios.append({
                             'title': title,
+                            'image_url': img_url,
                             'show_info': show_info
                         })
 
