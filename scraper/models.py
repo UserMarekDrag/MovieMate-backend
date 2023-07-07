@@ -17,6 +17,7 @@ class Movie(models.Model):
     category = models.CharField(max_length=255, null=True)
     description = models.TextField(null=True)
     image_url = models.URLField(null=True)
+    movie_url = models.URLField(max_length=2000, null=True)
 
 
 class Show(models.Model):
