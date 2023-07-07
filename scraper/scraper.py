@@ -102,6 +102,11 @@ class MultikinoScraper(BaseMovieScraper):
                     title = soup_item.find('div', {'class': 'filmlist__info-txt'}).find('span',
                                                                                         {'data-v-9364a27e': True}).text
 
+                    # Get the URL address to movie details
+                    movie_url = 'https://multikino.pl' + soup_item \
+                        .find('div', {'class': 'filmlist__info-txt'}) \
+                        .find('a')['href']
+
                     category = soup_item.find('a', {
                         'class': 'film-details__item',
                         'rv-class-film-details__item--selected': 'genre.highlighted'
@@ -129,7 +134,8 @@ class MultikinoScraper(BaseMovieScraper):
                         'category': category,
                         'description': description,
                         'image_url': img_url,
-                        'show_info': show_info
+                        'show_info': show_info,
+                        'movie_url': movie_url
                     })
 
         except (WebDriverException, AttributeError) as error:
@@ -183,6 +189,11 @@ class HeliosScraper(BaseMovieScraper):
                     title = soup_item.find('h2', {'class': 'movie-title'}).find('a',
                                                                                 {'class': 'movie-link'}).text.strip()
 
+                    # Get the URL address to movie details
+                    movie_url = 'https://helios.pl' + soup_item \
+                        .find('h2', {'class': 'movie-title'}) \
+                        .find('a')['href']
+
                     # Get the image URL
                     img_url = soup_item.find('img').get('src')
 
@@ -197,7 +208,8 @@ class HeliosScraper(BaseMovieScraper):
                         movie_info_list_helios.append({
                             'title': title,
                             'image_url': img_url,
-                            'show_info': show_info
+                            'show_info': show_info,
+                            'movie_url': movie_url
                         })
 
         except (WebDriverException, AttributeError) as error:
