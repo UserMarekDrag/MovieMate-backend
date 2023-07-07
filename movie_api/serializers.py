@@ -38,7 +38,7 @@ class MovieSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = Movie
-        fields = ['title', 'category', 'description', 'image_url']
+        fields = ['title', 'category', 'description', 'image_url', 'movie_url']
 
 
 class ShowSerializer(serializers.ModelSerializer):
