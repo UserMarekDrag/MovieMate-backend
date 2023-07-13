@@ -12,6 +12,34 @@ Welcome to MovieMate, a one-stop solution for movie enthusiasts in Poland. Movie
 
 - User Management: The user_api module handles user and superuser creation. It enables the addition of new features as the application evolves.
 
+### Running Custom Management Commands
+
+MovieMate allows to load cinema data and run scraper tasks directly through Django's custom management commands. You can use the `load_cinemas` and `run_scraper` commands as follows:
+
+1. To load cinema data from the `cinemas.json` file:
+
+```bash
+python manage.py load_cinemas
+```
+
+2. To run the scraper tasks for all cinemas:
+
+```bash
+python manage.py run_scraper --all
+python manage.py run_scraper -a
+```
+
+Or for a specific cinema:
+
+```bash
+python manage.py run_scraper --cinema cinema_name
+python manage.py run_scraper -c cinema_name
+```
+
+Replace cinema_name with multikino or helios. This will initiate the scraping process for the specified cinema.
+
+Please note that the run_scraper command requires either -a (--all) or -c (--cinema) options. -a or --all will run tasks for all cinemas while -c or --cinema allows to specify a particular cinema.
+
 ### Backend Repository
 The backend repository contains the server-side code for the MovieMade application. It uses Python and Django to handle API requests and communicate with the PostgreSQL database.
 
