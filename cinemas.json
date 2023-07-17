@@ -2,7 +2,7 @@
     {
         "name": "multikino",
         "city": "kielce",
-        "address": "Warszawska 26"
+        "address": "ul. Warszawska 26"
     },
     {
         "name": "multikino",
@@ -12,7 +12,7 @@
     {
         "name": "multikino",
         "city": "krakow",
-        "address": "Dobrego Pasterza 128"
+        "address": "ul. Dobrego Pasterza 128"
     },
     {
         "name": "multikino",
@@ -22,21 +22,21 @@
     {
         "name": "helios",
         "city": "kielce",
-        "address": "Świętokrzyska 20"
+        "address": "ul. Świętokrzyska 20"
     },
     {
         "name": "helios",
         "city": "sosnowiec",
-        "address": "Modrzejowska 32b"
+        "address": "ul. Modrzejowska 32b"
     },
     {
         "name": "helios",
         "city": "poznan",
-        "address": "Pleszewska 1"
+        "address": "ul. Pleszewska 1"
     },
     {
         "name": "helios",
         "city": "bydgoszcz",
-        "address": "Fordońska 141"
+        "address": "ul. Fordońska 141"
     }
 ]
