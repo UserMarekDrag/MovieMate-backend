@@ -1,4 +1,5 @@
 from rest_framework import serializers, exceptions
+from rest_framework.authtoken.models import Token
 from django.contrib.auth import get_user_model, authenticate
 from .validations import custom_validation
 
@@ -40,6 +41,17 @@ class UserLoginSerializer(serializers.Serializer):
     email = serializers.EmailField()
     password = serializers.CharField()
 
+    def validate(self, data):
+        """
+        Validates the user credentials
+        """
+        user = authenticate(username=data['email'], password=data['password'])
+        if not user:
+            raise exceptions.ValidationError('Invalid credentials')
+
+        token, _ = Token.objects.get_or_create(user=user)
+        return {'token': token.key, 'user': user}
+
     def create(self, validated_data):
         """
         Not used, included for completeness of Serializer implementation.
@@ -51,15 +63,6 @@ class UserLoginSerializer(serializers.Serializer):
         Not used, included for completeness of Serializer implementation.
         """
         raise NotImplementedError("Method 'update' not implemented.")
-
-    def check_user(self, clean_data):
-        """
-        Check user with given credentials.
-        """
-        user = authenticate(username=clean_data['email'], password=clean_data['password'])
-        if not user:
-            raise exceptions.ValidationError('user not found')
-        return user
 
 
 class UserSerializer(serializers.ModelSerializer):
