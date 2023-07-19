@@ -78,5 +78,5 @@ class UserLoginSerializerTestCase(TestCase):
         Test the UserLoginSerializer.
         """
         self.assertTrue(self.login_serializer.is_valid())
-        user = self.login_serializer.check_user(self.login_serializer.validated_data)
+        user = self.login_serializer.validated_data['user']
         self.assertEqual(user, self.user)
