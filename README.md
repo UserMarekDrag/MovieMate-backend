@@ -74,7 +74,7 @@ docker-compose up
 To generate a new database schema visualization, you can use the `django-extensions`'s `graph_models` command:
 
 ```bash
-python manage.py graph_models -a -g -o moviemate_visualized.png
+python manage.py graph_models -a -o moviemate_visualized.png 
 ```
 
 ## Documentation
