@@ -1,4 +1,5 @@
 from rest_framework.test import APITestCase, APIClient
+from rest_framework.authtoken.models import Token
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
@@ -18,7 +19,7 @@ class UserRegisterViewTestCase(APITestCase):
         """
         Test the user registration view.
         """
-        response = self.client.post('/api/register/',
+        response = self.client.post('/api-user/register/',
                                     {'email': 'test@example.com', 'username': 'test', 'password': 'test1234'})
         self.assertEqual(response.status_code, 201)
 
@@ -38,8 +39,9 @@ class UserLoginViewTestCase(APITestCase):
         """
         Test the user login view.
         """
-        response = self.client.post('/api/login/', {'email': 'test@example.com', 'password': 'test1234'})
+        response = self.client.post('/api-user/login/', {'email': 'test@example.com', 'password': 'test1234'})
         self.assertEqual(response.status_code, 200)
+        self.assertIn('token', response.data)
 
 
 class UserLogoutViewTestCase(APITestCase):
@@ -52,13 +54,20 @@ class UserLogoutViewTestCase(APITestCase):
         """
         self.client = APIClient()
         self.user = User.objects.create_user(username='test', email='test@example.com', password='test1234')
-        self.client.force_authenticate(user=self.user)
+        self.token = Token.objects.create(user=self.user)
+        self.api_authentication()
+
+    def api_authentication(self):
+        """
+        Authentication with Token Auth
+        """
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token.key)
 
     def test_user_logout_view(self):
         """
         Test the user logout view.
         """
-        response = self.client.post('/api/logout/')
+        response = self.client.post('/api-user/logout/')
         self.assertEqual(response.status_code, 200)
 
 
@@ -72,11 +81,18 @@ class UserViewTestCase(APITestCase):
         """
         self.client = APIClient()
         self.user = User.objects.create_user(username='test', email='test@example.com', password='test1234')
-        self.client.force_authenticate(user=self.user)
+        self.token = Token.objects.create(user=self.user)
+        self.api_authentication()
+
+    def api_authentication(self):
+        """
+        Authentication with Token Auth
+        """
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token.key)
 
     def test_user_view(self):
         """
         Test the user view.
         """
-        response = self.client.get('/api/user/')
+        response = self.client.get('/api-user/user/')
         self.assertEqual(response.status_code, 200)
