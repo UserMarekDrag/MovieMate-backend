@@ -18,7 +18,7 @@ class MovieSerializerTest(TestCase):
     def test_contains_expected_fields(self):
         """Ensure serializer contains the expected fields."""
         data = self.serializer.data
-        self.assertCountEqual(data.keys(), ['title', 'category', 'description', 'image_url'])
+        self.assertCountEqual(data.keys(), ['title', 'category', 'description', 'image_url', 'movie_url'])
 
 
 class CinemaSerializerTest(TestCase):
@@ -32,7 +32,7 @@ class CinemaSerializerTest(TestCase):
     def test_contains_expected_fields(self):
         """Ensure serializer contains the expected fields."""
         data = self.serializer.data
-        self.assertCountEqual(data.keys(), ['name', 'city'])
+        self.assertCountEqual(data.keys(), ['name', 'city', 'address'])
 
 
 class ShowSerializerTest(TestCase):
