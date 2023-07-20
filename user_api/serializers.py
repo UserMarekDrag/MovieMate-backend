@@ -1,6 +1,7 @@
 from rest_framework import serializers, exceptions
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import get_user_model, authenticate
+from django.core.exceptions import ValidationError
 from .validations import custom_validation
 
 UserModel = get_user_model()
@@ -71,3 +72,38 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserModel
         fields = ('email', 'username')
+
+
+class UserChangePasswordSerializer(serializers.Serializer):
+    """
+    Serializer for password change endpoint.
+    """
+    old_password = serializers.CharField(required=True)
+    new_password = serializers.CharField(required=True)
+    new_password2 = serializers.CharField(required=True)
+
+    def validate(self, data):
+        """
+        Check that the old password is correct and the new passwords match.
+        """
+        if not self.context['request'].user.check_password(data['old_password']):
+            raise ValidationError({'old_password': 'Wrong password.'})
+
+        if data['new_password'] != data['new_password2']:
+            raise ValidationError({'new_password': 'Passwords must match.'})
+
+        custom_validation({'password': data['new_password']})
+
+        return data
+
+    def create(self, validated_data):
+        """
+        Not used, included for completeness of Serializer implementation.
+        """
+        raise NotImplementedError("Method 'create' not implemented.")
+
+    def update(self, instance, validated_data):
+        """
+        Not used, included for completeness of Serializer implementation.
+        """
+        raise NotImplementedError("Method 'update' not implemented.")

@@ -3,7 +3,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import permissions, status
 
-from .serializers import UserRegisterSerializer, UserLoginSerializer, UserSerializer
+from .serializers import UserRegisterSerializer, UserLoginSerializer, UserSerializer, UserChangePasswordSerializer
 
 
 class UserRegister(APIView):
@@ -70,3 +70,22 @@ class UserView(APIView):
         """
         serializer = UserSerializer(request.user)
         return Response({'user': serializer.data}, status=status.HTTP_200_OK)
+
+
+class UserChangePasswordView(APIView):
+    """
+    Class based view for password change.
+    """
+    permission_classes = (permissions.IsAuthenticated,)
+    authentication_classes = (TokenAuthentication,)
+
+    def put(self, request):
+        """
+        Handles password change PUT request.
+        """
+        serializer = UserChangePasswordSerializer(data=request.data, context={'request': request})
+        if serializer.is_valid(raise_exception=True):
+            request.user.set_password(serializer.validated_data['new_password'])
+            request.user.save()
+            return Response({"detail": "Successfully password changed."}, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
