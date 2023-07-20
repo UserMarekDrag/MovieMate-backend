@@ -137,3 +137,34 @@ class UserChangePasswordViewTestCase(APITestCase):
                                     'new_password2': 'Test12345!'
                                     })
         self.assertEqual(response.status_code, 200)
+
+
+class UserDeleteViewTestCase(APITestCase):
+    """
+    Test case for the user accounts delete.
+    """
+
+    def setUp(self):
+        """
+        Set up the test by creating an instance of the APIClient, a user instance, and authenticating the client.
+        """
+        self.client = APIClient()
+        self.user = User.objects.create_user(username='test', email='test@example.com', password='Test1234!')
+        self.token = Token.objects.create(user=self.user)
+        self.api_authentication()
+
+    def api_authentication(self):
+        """
+        Authentication with Token Auth
+        """
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token.key)
+
+    def test_user_delete_account_view(self):
+        """
+        Test the user delete his accounts view.
+        """
+        response = self.client.delete('/api-user/delete/')
+        self.assertEqual(response.status_code, 204)
+
+        with self.assertRaises(User.DoesNotExist):
+            User.objects.get(username='test')
