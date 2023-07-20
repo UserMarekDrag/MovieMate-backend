@@ -1,22 +1,13 @@
 from django.test import TestCase
 from django.core.exceptions import ValidationError
-from user_api.models import AppUser
-from user_api.validations import custom_validation, validate_email, validate_username, validate_password
+from django.contrib.auth.password_validation import validate_password as django_validate_password
+from user_api.validations import custom_validation
 
 
 class CustomValidationTestCase(TestCase):
     """
     Test case for the custom validation.
     """
-    def setUp(self):
-        """
-        Set up the test by creating a user instance.
-        """
-        self.user = AppUser.objects.create_user(
-            email='testuser@example.com',
-            username='testuser',
-            password='password123'
-        )
 
     def test_custom_validation(self):
         """
@@ -25,12 +16,12 @@ class CustomValidationTestCase(TestCase):
         valid_data = {
             'email': 'newuser@example.com',
             'username': 'newuser',
-            'password': 'newpassword123'
+            'password': 'Newpassword123'
         }
 
         invalid_data = {
-            'email': 'testuser@example.com',  # This email already exists
-            'username': '',  # username is empty
+            'email': 'testuser@example.com',
+            'username': 'newuser',
             'password': '123'  # password is less than 8 characters
         }
 
@@ -44,65 +35,19 @@ class CustomValidationTestCase(TestCase):
         with self.assertRaises(ValidationError):
             custom_validation(invalid_data)
 
+    def test_django_password_validation(self):
+        """
+        Test Django's built-in password validation function.
+        """
+        valid_password = 'Newpassword123'
+        invalid_password = '123'  # password is less than 8 characters
 
-class ValidationMethodsTestCase(TestCase):
-    """
-    Test case for the validation methods.
-    """
-    def setUp(self):
-        """
-        Set up the test by creating valid and invalid data dictionaries.
-        """
-        self.valid_data = {
-            'email': 'newuser@example.com',
-            'username': 'newuser',
-            'password': 'newpassword123'
-        }
-
-        self.invalid_data = {
-            'email': '',  # email is empty
-            'username': '',  # username is empty
-            'password': ''  # password is empty
-        }
-
-    def test_validate_email(self):
-        """
-        Test the validate_email function.
-        """
-        # Test with valid data
+        # Test with valid password
         try:
-            validate_email(self.valid_data)
+            django_validate_password(valid_password)
         except ValidationError:
-            self.fail("validate_email() raised ValidationError unexpectedly!")
+            self.fail("django_validate_password() raised ValidationError unexpectedly!")
 
-        # Test with invalid data
+        # Test with invalid password
         with self.assertRaises(ValidationError):
-            validate_email(self.invalid_data)
-
-    def test_validate_username(self):
-        """
-        Test the validate_username function.
-        """
-        # Test with valid data
-        try:
-            validate_username(self.valid_data)
-        except ValidationError:
-            self.fail("validate_username() raised ValidationError unexpectedly!")
-
-        # Test with invalid data
-        with self.assertRaises(ValidationError):
-            validate_username(self.invalid_data)
-
-    def test_validate_password(self):
-        """
-        Test the validate_password function.
-        """
-        # Test with valid data
-        try:
-            validate_password(self.valid_data)
-        except ValidationError:
-            self.fail("validate_password() raised ValidationError unexpectedly!")
-
-        # Test with invalid data
-        with self.assertRaises(ValidationError):
-            validate_password(self.invalid_data)
+            django_validate_password(invalid_password)

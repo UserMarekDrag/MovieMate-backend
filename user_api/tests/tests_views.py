@@ -9,6 +9,7 @@ class UserRegisterViewTestCase(APITestCase):
     """
     Test case for the user registration view.
     """
+
     def setUp(self):
         """
         Set up the test by creating an instance of the APIClient.
@@ -20,14 +21,20 @@ class UserRegisterViewTestCase(APITestCase):
         Test the user registration view.
         """
         response = self.client.post('/api-user/register/',
-                                    {'email': 'test@example.com', 'username': 'test', 'password': 'test1234'})
+                                    {'email': 'test@example.com',
+                                     'username': 'test',
+                                     'password': 'Test1234!'})
+
         self.assertEqual(response.status_code, 201)
+        self.assertEqual(response.data['email'], 'test@example.com')
+        self.assertEqual(response.data['username'], 'test')
 
 
 class UserLoginViewTestCase(APITestCase):
     """
     Test case for the user login view.
     """
+
     def setUp(self):
         """
         Set up the test by creating an instance of the APIClient and a user instance.
@@ -48,6 +55,7 @@ class UserLogoutViewTestCase(APITestCase):
     """
     Test case for the user logout view.
     """
+
     def setUp(self):
         """
         Set up the test by creating an instance of the APIClient, a user instance, and authenticating the client.
@@ -75,6 +83,7 @@ class UserViewTestCase(APITestCase):
     """
     Test case for the user view.
     """
+
     def setUp(self):
         """
         Set up the test by creating an instance of the APIClient, a user instance, and authenticating the client.

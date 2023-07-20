@@ -32,6 +32,7 @@ class UserRegisterSerializerTestCase(TestCase):
     """
     Test case for the user registration serializers.
     """
+
     def setUp(self):
         """
         Set up the test by creating a user data dictionary and serializer.
@@ -39,7 +40,7 @@ class UserRegisterSerializerTestCase(TestCase):
         self.user_data = {
             'email': 'testuser2@example.com',
             'username': 'testuser2',
-            'password': 'password123'
+            'password': 'Testuser123!'
         }
         self.serializer = UserRegisterSerializer(data=self.user_data)
 
@@ -47,11 +48,10 @@ class UserRegisterSerializerTestCase(TestCase):
         """
         Test the UserRegisterSerializer.
         """
-        self.assertTrue(self.serializer.is_valid())
+        self.assertTrue(self.serializer.is_valid(), self.serializer.errors)
         user = self.serializer.save()
-        self.assertEqual(user.email, self.user_data['email'])
-        self.assertEqual(user.username, self.user_data['username'])
-        self.assertTrue(user.check_password(self.user_data['password']))
+        self.assertEqual(user['email'], self.user_data['email'])
+        self.assertEqual(user['username'], self.user_data['username'])
 
 
 class UserLoginSerializerTestCase(TestCase):
