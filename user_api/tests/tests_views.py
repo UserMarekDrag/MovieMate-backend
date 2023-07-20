@@ -105,3 +105,35 @@ class UserViewTestCase(APITestCase):
         """
         response = self.client.get('/api-user/user/')
         self.assertEqual(response.status_code, 200)
+
+
+class UserChangePasswordViewTestCase(APITestCase):
+    """
+    Test case for the user password changed.
+    """
+
+    def setUp(self):
+        """
+        Set up the test by creating an instance of the APIClient, a user instance, and authenticating the client.
+        """
+        self.client = APIClient()
+        self.user = User.objects.create_user(username='test', email='test@example.com', password='Test1234!')
+        self.token = Token.objects.create(user=self.user)
+        self.api_authentication()
+
+    def api_authentication(self):
+        """
+        Authentication with Token Auth
+        """
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token.key)
+
+    def test_user_change_password_view(self):
+        """
+        Test the user changed his password view.
+        """
+        response = self.client.put('/api-user/change/', {
+                                    'old_password': 'Test1234!',
+                                    'new_password': 'Test12345!',
+                                    'new_password2': 'Test12345!'
+                                    })
+        self.assertEqual(response.status_code, 200)

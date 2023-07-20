@@ -1,5 +1,6 @@
-from django.test import TestCase
-from user_api.serializers import UserRegisterSerializer, UserLoginSerializer, UserSerializer
+from django.test import TestCase, RequestFactory
+from user_api.serializers import UserRegisterSerializer, UserLoginSerializer, UserSerializer, \
+    UserChangePasswordSerializer
 from user_api.models import AppUser
 
 
@@ -80,3 +81,62 @@ class UserLoginSerializerTestCase(TestCase):
         self.assertTrue(self.login_serializer.is_valid())
         user = self.login_serializer.validated_data['user']
         self.assertEqual(user, self.user)
+
+
+class UserChangePasswordSerializerTestCase(TestCase):
+    """
+    Test case for the password change serializers.
+    """
+
+    def setUp(self):
+        """
+        Set up the test by creating a user instance and a request context.
+        """
+        self.user = AppUser.objects.create_user(
+            email='testuser4@example.com',
+            username='testuser4',
+            password='password123'
+        )
+        self.factory = RequestFactory()
+        self.context = {
+            'request': self.factory.get('/api-user/change/')
+        }
+        self.context['request'].user = self.user
+
+    def test_passwords_match(self):
+        """
+        Test that the new passwords match.
+        """
+        data = {
+            'old_password': 'password123',
+            'new_password': 'new_password123',
+            'new_password2': 'new_password123',
+        }
+        serializer = UserChangePasswordSerializer(data=data, context=self.context)
+        self.assertTrue(serializer.is_valid(), serializer.errors)
+
+    def test_passwords_do_not_match(self):
+        """
+        Test that the new passwords do not match.
+        """
+        data = {
+            'old_password': 'password123',
+            'new_password': 'new_password123',
+            'new_password2': 'wrong_password123',
+        }
+        serializer = UserChangePasswordSerializer(data=data, context=self.context)
+        self.assertFalse(serializer.is_valid())
+        self.assertIn('new_password', serializer.errors)
+
+    def test_old_password_is_incorrect(self):
+        """
+        Test that the old password is incorrect.
+        """
+        data = {
+            'old_password': 'wrong_password123',
+            'new_password': 'new_password123',
+            'new_password2': 'new_password123',
+        }
+        serializer = UserChangePasswordSerializer(data=data, context=self.context)
+        self.assertFalse(serializer.is_valid())
+        self.assertIn('old_password', serializer.errors)
