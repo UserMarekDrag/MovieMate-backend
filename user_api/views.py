@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from rest_framework import permissions, status
 
 from .serializers import UserRegisterSerializer, UserLoginSerializer, UserSerializer, UserChangePasswordSerializer
+from .models import AppUser
 
 
 class UserRegister(APIView):
@@ -89,3 +90,23 @@ class UserChangePasswordView(APIView):
             request.user.save()
             return Response({"detail": "Successfully password changed."}, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class UserDeleteView(APIView):
+    """
+    Class based view for user accounts delete.
+    """
+    permission_classes = (permissions.IsAuthenticated,)
+    authentication_classes = (TokenAuthentication,)
+
+    def delete(self, request):
+        """
+        Handles accounts delete DELETE request.
+        """
+        try:
+            user = AppUser.objects.get(pk=request.user.pk)
+        except AppUser.DoesNotExist:
+            return Response({"detail": "Error, user does not exist."}, status=status.HTTP_404_NOT_FOUND)
+
+        user.delete()
+        return Response({"detail": "Successfully account deleted."}, status=status.HTTP_204_NO_CONTENT)
