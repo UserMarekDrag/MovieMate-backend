@@ -4,7 +4,6 @@ from rest_framework.response import Response
 from rest_framework import permissions, status
 
 from .serializers import UserRegisterSerializer, UserLoginSerializer, UserSerializer
-from .validations import custom_validation, validate_email, validate_password
 
 
 class UserRegister(APIView):
@@ -17,13 +16,11 @@ class UserRegister(APIView):
         """
         Handles user registration POST request.
         """
-        clean_data = custom_validation(request.data)
-        serializer = UserRegisterSerializer(data=clean_data)
-        if serializer.is_valid(raise_exception=True):
+        serializer = UserRegisterSerializer(data=request.data)
+        if serializer.is_valid():
             user = serializer.save()
-            if user:
-                return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(status=status.HTTP_400_BAD_REQUEST)
+            return Response(user, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class UserLogin(APIView):
@@ -37,15 +34,12 @@ class UserLogin(APIView):
         """
         Handles user login POST request.
         """
-        data = request.data
-        if not validate_email(data) or not validate_password(data):
-            return Response(status=status.HTTP_400_BAD_REQUEST)
-        serializer = UserLoginSerializer(data=data)
+        serializer = UserLoginSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
             token = serializer.validated_data['token']
             user = serializer.validated_data['user']
             return Response({'token': token, 'user': UserSerializer(user).data}, status=status.HTTP_200_OK)
-        return Response(status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class UserLogout(APIView):
@@ -60,7 +54,7 @@ class UserLogout(APIView):
         Handles user logout POST request.
         """
         request.user.auth_token.delete()
-        return Response(status=status.HTTP_200_OK)
+        return Response({"detail": "Successfully logged out."}, status=status.HTTP_200_OK)
 
 
 class UserView(APIView):

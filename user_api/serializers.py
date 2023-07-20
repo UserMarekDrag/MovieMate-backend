@@ -3,7 +3,6 @@ from rest_framework.authtoken.models import Token
 from django.contrib.auth import get_user_model, authenticate
 from .validations import custom_validation
 
-
 UserModel = get_user_model()
 
 
@@ -17,7 +16,7 @@ class UserRegisterSerializer(serializers.ModelSerializer):
 
     def validate(self, data):
         """
-        Validate user registration data.
+        Apply custom validation to user registration data.
         """
         custom_validation(data)
         return data
@@ -31,7 +30,7 @@ class UserRegisterSerializer(serializers.ModelSerializer):
             username=validated_data['username'],
             password=validated_data['password']
         )
-        return user_obj
+        return {'username': user_obj.username, 'email': user_obj.email}
 
 
 class UserLoginSerializer(serializers.Serializer):
