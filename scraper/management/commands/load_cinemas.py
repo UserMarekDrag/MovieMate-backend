@@ -14,7 +14,7 @@ class Command(BaseCommand):
         """
         Handle the command execution.
         """
-        with open('cities.json', 'r', encoding='utf-8') as file:
+        with open('cinemas.json', 'r', encoding='utf-8') as file:
             cinemas = json.load(file)
 
         for cinema in cinemas:
