@@ -120,7 +120,7 @@ class MultikinoScraper(BaseMovieScraper):
                         find('p', {'class': 'filmlist__synopsis--twoLines'}) else 'No description'
 
                     # Get the image URL
-                    img_url = soup_item.find('img').get('src')
+                    img_url = soup_item.find('img', {'class': 'filmlist__poster'}).get('src')
 
                     show_info = [{
                         'hour': time.find('time', {'class': 'default'}).text.strip().replace('*', ''),
