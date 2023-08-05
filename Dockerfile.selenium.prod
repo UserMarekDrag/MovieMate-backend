@@ -1,0 +1,28 @@
+# Base image for Django application
+FROM selenium/standalone-chrome:latest
+
+# Set user to root to allow software installation
+USER root
+
+# Set the environment variable PYTHONUNBUFFERED for the container
+ENV PYTHONUNBUFFERED=1
+
+# Add Python and Pip
+RUN apt-get update && apt-get install -y python3.10 python3-pip
+
+# Create a directory for the application code
+RUN mkdir /code
+WORKDIR /code
+
+# Create a new user 'myuser'
+RUN useradd -m myuser
+
+# Install dependencies for the Django application
+COPY requirements.txt /code/
+RUN pip3 install --no-cache-dir -r requirements.txt
+
+# Copy project files to the container
+COPY . /code/
+
+# Switch back to the new user 'myuser'
+USER myuser
