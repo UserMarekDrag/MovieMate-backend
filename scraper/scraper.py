@@ -16,7 +16,7 @@ MULTIKINO_URL_FORMAT = 'https://multikino.pl/repertuar/{}/teraz-gramy?data={}'
 HELIOS_URL_FORMAT = 'https://www.helios.pl/{},{}/Repertuar/index/dzien/{}/kino/{}'
 
 # Setup logging
-logging.basicConfig(filename='movie_scraper.log', level=logging.ERROR,
+logging.basicConfig(filename='/tmp/movie_scraper.log', level=logging.ERROR,
                     format='%(asctime)s %(levelname)s %(name)s %(message)s')
 logger = logging.getLogger(__name__)
 
