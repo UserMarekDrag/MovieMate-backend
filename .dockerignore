@@ -10,6 +10,7 @@ working/
 __pycache__/
 *.swp
 *.env
+*.env-prod
 
 # Ignore unit tests report folder
 htmlcov/

@@ -5,6 +5,7 @@ env
 /static
 .DS_Store
 .env
+.env-prod
 working
 media
 logs
