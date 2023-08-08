@@ -42,10 +42,11 @@ services:
       context: .
       dockerfile: Dockerfile.prod
     command: celery -A moviemate beat --loglevel=info
+    env_file:
+      - .env
     depends_on:
       - db
       - rabbit
-
 
   nginx:
     image: nginx:stable-alpine
