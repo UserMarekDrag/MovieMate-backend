@@ -55,8 +55,8 @@ services:
     - ./ssl:/etc/nginx/ssl
     - static_volume:/code/static
     ports:
-      - "8082:80"
-      - "8443:443"
+      - "80:80"
+      - "443:443"
     depends_on:
       - backend
 
