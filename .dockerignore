@@ -11,6 +11,7 @@ __pycache__/
 *.swp
 *.env
 *.env-prod
+certbot/
 
 # Ignore unit tests report folder
 htmlcov/
