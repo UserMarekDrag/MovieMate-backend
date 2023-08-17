@@ -64,7 +64,7 @@ services:
       - certbot
 
   certbot:
-    image: certbot/certbot:2.6.0
+    image: certbot/certbot:v2.6.0
     env_file:
       - .env
     command: certonly --webroot --webroot-path=/var/www/certbot/ -d ${CERTBOT_HOST} --email ${CERTBOT_EMAIL} --agree-tos --no-eff-email --keep
