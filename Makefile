@@ -1,6 +1,7 @@
 .PHONY: lint
 lint:
-	pylint $(find . -name "*.py")
+	export DJANGO_SETTINGS_MODULE=moviemate.settings; \
+	pylint --load-plugins pylint_django --rcfile=.pylintrc movie_api/ moviemate/ user_api/ scraper/
 
 .PHONY: migrate
 migrate:
