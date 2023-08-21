@@ -18,6 +18,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Install necessary tools
+        run: apt-get update && apt-get install -y make
+
       - name: Install Dependencies
         run: make install
 
