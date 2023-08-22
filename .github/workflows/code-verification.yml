@@ -31,6 +31,12 @@ jobs:
       - name: Install necessary tools
         run: apt-get update && apt-get install -y make
 
+      - name: Install PostgreSQL client
+        run: apt-get install -y postgresql-client
+
+      - name: Check PostgreSQL readiness
+        run: make postgres
+
       - name: Install Dependencies
         run: make install
 
