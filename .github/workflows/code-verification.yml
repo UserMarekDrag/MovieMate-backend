@@ -18,7 +18,7 @@ jobs:
       CELERY_BROKER_URL: ${{ secrets.CELERY_BROKER_URL }}
 
     services:
-      postgres:
+      db:
         image: postgres:15-alpine
         env:
           POSTGRES_USER: ${{ secrets.DB_USER }}
