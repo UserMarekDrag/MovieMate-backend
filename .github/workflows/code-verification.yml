@@ -19,7 +19,7 @@ jobs:
       DEBUG: ${{ secrets.DEBUG }}
 
     services:
-      db:
+      postgres:
         image: postgres:15-alpine
         env:
           POSTGRES_USER: ${{ secrets.DB_USER }}
