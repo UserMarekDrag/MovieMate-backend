@@ -80,4 +80,4 @@ jobs:
       - name: Test
         run: make test
         env:
-          MOVIEMATE_SETTING_DATABASES: '{"default":{"ENGINE":"django.db.backends.postgresql", "PORT": 5432, "NAME":"${{ inputs.DB_NAME || secrets.DB_NAME }}", ${{ inputs.DB_HOST_TEST || secrets.DB_HOST_TEST }}", "USER":"${{ inputs.DB_USER || secrets.DB_USER }}", "PASSWORD":"${{ inputs.DB_PASSWORD || secrets.DB_PASSWORD }}"}}'
+          MOVIEMATE_SETTING_DATABASES: '{"default":{"ENGINE":"django.db.backends.postgresql", "PORT": 5432, "NAME":"${{ inputs.DB_NAME || secrets.DB_NAME }}", "HOST":"${{ inputs.DB_HOST_TEST || secrets.DB_HOST_TEST }}", "USER":"${{ inputs.DB_USER || secrets.DB_USER }}", "PASSWORD":"${{ inputs.DB_PASSWORD || secrets.DB_PASSWORD }}"}}'
