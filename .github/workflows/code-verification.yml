@@ -19,7 +19,7 @@ jobs:
       DEBUG: ${{ secrets.DEBUG }}
 
     services:
-      db:
+      postgres:
         image: postgres:15-alpine
         env:
           POSTGRES_USER: ${{ secrets.DB_USER }}
@@ -42,4 +42,5 @@ jobs:
       - name: Test
         run: make test
         env:
-          MOVIEMATE_SETTING_DATABASES: '{"default":{"ENGINE":"django.db.backends.postgresql", "PORT": 5432, "NAME":"${{ secrets.DB_NAME }}", "HOST":"db", "USER":"${{ secrets.DB_USER }}", "PASSWORD":"${{ secrets.DB_PASSWORD }}"}}'
+
+          MOVIEMATE_SETTING_DATABASES: '{"default":{"ENGINE":"django.db.backends.postgresql", "PORT": 5432, "NAME":"${{ secrets.DB_NAME }}", "HOST":"${{ secrets.DB_HOST_TEST }}", "USER":"${{ secrets.DB_USER }}", "PASSWORD":"${{ secrets.DB_PASSWORD }}"}}'
