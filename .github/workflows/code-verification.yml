@@ -47,3 +47,5 @@ jobs:
 
       - name: Test
         run: make test
+        env:
+          MOVIEMATE_SETTING_DATABASES: '{"default":{"HOST":"db"}}'
