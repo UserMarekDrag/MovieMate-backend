@@ -47,3 +47,5 @@ jobs:
 
       - name: Test
         run: make test
+        env:
+          MOVIEMATE_SETTING_DATABASES: '{"default":{"ENGINE":"django.db.backends.postgresql", "PORT": 5432, "NAME":"${{ secrets.DB_NAME }}", "HOST":"db", "USER":"${{ secrets.DB_USER }}", "PASSWORD":"${{ secrets.DB_PASSWORD }}"}}'

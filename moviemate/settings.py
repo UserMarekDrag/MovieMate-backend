@@ -102,6 +102,12 @@ DATABASES = {
     }
 }
 
+DATABASE_CONFIG = os.getenv('MOVIEMATE_SETTING_DATABASES')
+
+if DATABASE_CONFIG:
+    database_config = json.loads(DATABASE_CONFIG)
+    DATABASES.update(database_config)
+
 # User model
 AUTH_USER_MODEL = 'user_api.AppUser'
 
