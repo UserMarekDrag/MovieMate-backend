@@ -36,12 +36,6 @@ jobs:
       - name: Install Dependencies
         run: make install
 
-      - name: Install PostgreSQL client
-        run: apt-get install -y postgresql-client
-
-      - name: Check PostgreSQL readiness
-        run: make postgres
-
       - name: Lint
         run: make lint
 
