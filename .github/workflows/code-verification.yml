@@ -6,24 +6,34 @@ on:
     inputs:
       SECRET_KEY:
         required: true
+        type: string
       ALLOWED_HOSTS:
         required: true
+        type: string
       CORS_ALLOWED_ORIGINS:
         required: true
+        type: string
       DB_USER:
         required: true
+        type: string
       DB_PASSWORD:
         required: true
+        type: string
       DB_NAME:
         required: true
+        type: string
       DB_HOST:
         required: true
+        type: string
       DB_HOST_TEST:
         required: true
+        type: string
       CELERY_BROKER_URL:
         required: true
+        type: string
       DEBUG:
         required: true
+        type: string
     outputs:
       result:
         description: "Result of the Quality Assurance"
