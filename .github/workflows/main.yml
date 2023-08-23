@@ -12,7 +12,7 @@ concurrency:
 jobs:
   quality-assurance:
     name: Quality Assurance
-    uses: ./.github/workflows/code-verification.yml@main
+    uses: ./.github/workflows/code-verification.yml
     with:
       SECRET_KEY: ${{ secrets.SECRET_KEY }}
       ALLOWED_HOSTS: ${{ secrets.ALLOWED_HOSTS }}
