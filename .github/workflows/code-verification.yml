@@ -3,41 +3,27 @@ name: Quality Assurance
 on:
   pull_request:
   workflow_call:
-    inputs:
+    secrets:
       SECRET_KEY:
         required: true
-        type: string
       ALLOWED_HOSTS:
         required: true
-        type: string
       CORS_ALLOWED_ORIGINS:
         required: true
-        type: string
       DB_USER:
         required: true
-        type: string
       DB_PASSWORD:
         required: true
-        type: string
       DB_NAME:
         required: true
-        type: string
       DB_HOST:
         required: true
-        type: string
       DB_HOST_TEST:
         required: true
-        type: string
       CELERY_BROKER_URL:
         required: true
-        type: string
       DEBUG:
         required: true
-        type: string
-    outputs:
-      result:
-        description: "Result of the Quality Assurance"
-        value: "success"
 
 jobs:
   quality-assurance:
@@ -46,24 +32,24 @@ jobs:
     container: python:3.10-slim-buster
 
     env:
-      SECRET_KEY: ${{ inputs.SECRET_KEY || secrets.SECRET_KEY }}
-      ALLOWED_HOSTS: ${{ inputs.ALLOWED_HOSTS || secrets.ALLOWED_HOSTS }}
-      CORS_ALLOWED_ORIGINS: ${{ inputs.CORS_ALLOWED_ORIGINS || secrets.CORS_ALLOWED_ORIGINS }}
-      DB_USER: ${{ inputs.DB_USER || secrets.DB_USER }}
-      DB_PASSWORD: ${{ inputs.DB_PASSWORD || secrets.DB_PASSWORD }}
-      DB_NAME: ${{ inputs.DB_NAME || secrets.DB_NAME }}
-      DB_HOST: ${{ inputs.DB_HOST || secrets.DB_HOST }}
-      DB_HOST_TEST: ${{ inputs.DB_HOST_TEST || secrets.DB_HOST_TEST }}
-      CELERY_BROKER_URL: ${{ inputs.CELERY_BROKER_URL || secrets.CELERY_BROKER_URL }}
-      DEBUG: ${{ inputs.DEBUG || secrets.DEBUG }}
+      SECRET_KEY: ${{ secrets.SECRET_KEY }}
+      ALLOWED_HOSTS: ${{ secrets.ALLOWED_HOSTS }}
+      CORS_ALLOWED_ORIGINS: ${{ secrets.CORS_ALLOWED_ORIGINS }}
+      DB_USER: ${{ secrets.DB_USER }}
+      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+      DB_NAME: ${{ secrets.DB_NAME }}
+      DB_HOST: ${{ secrets.DB_HOST }}
+      DB_HOST_TEST: ${{ secrets.DB_HOST_TEST }}
+      CELERY_BROKER_URL: ${{ secrets.CELERY_BROKER_URL }}
+      DEBUG: ${{ secrets.DEBUG }}
 
     services:
       postgres:
         image: postgres:15-alpine
         env:
-          POSTGRES_USER: ${{ inputs.DB_USER || secrets.DB_USER }}
-          POSTGRES_PASSWORD: ${{ inputs.DB_PASSWORD || secrets.DB_PASSWORD }}
-          POSTGRES_DB: ${{ inputs.DB_NAME || secrets.DB_NAME }}
+          POSTGRES_USER: ${{ secrets.DB_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          POSTGRES_DB: ${{ secrets.DB_NAME }}
 
     steps:
       - uses: actions/checkout@v3
@@ -80,4 +66,4 @@ jobs:
       - name: Test
         run: make test
         env:
-          MOVIEMATE_SETTING_DATABASES: '{"default":{"ENGINE":"django.db.backends.postgresql", "PORT": 5432, "NAME":"${{ inputs.DB_NAME || secrets.DB_NAME }}", "HOST":"${{ inputs.DB_HOST_TEST || secrets.DB_HOST_TEST }}", "USER":"${{ inputs.DB_USER || secrets.DB_USER }}", "PASSWORD":"${{ inputs.DB_PASSWORD || secrets.DB_PASSWORD }}"}}'
+          MOVIEMATE_SETTING_DATABASES: '{"default":{"ENGINE":"django.db.backends.postgresql", "PORT": 5432, "NAME":"${{ secrets.DB_NAME }}", "HOST":"${{ secrets.DB_HOST_TEST }}", "USER":"${{ secrets.DB_USER }}", "PASSWORD":"${{ secrets.DB_PASSWORD }}"}}'
