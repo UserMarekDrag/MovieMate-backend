@@ -1,16 +1,23 @@
 # MovieMade
 Welcome to MovieMate, a one-stop solution for movie enthusiasts in Poland. MovieMate offers an interface where users can select their city and date to view all available movie showtimes, along with links for reservations. By scraping data daily from the websites of two of the largest cinemas in Poland, Multikino and Helios, we keep our information up-to-date and comprehensive. More cinemas will be added over time as we continue to expand the functionality of our site.
 
+The backend of the application is hosted on an AWS EC2 instance and the domain moviemate.uk.to is secured with an SSL certificate obtained via certbot. Continuous integration and deployment is managed through GitHub Actions, which includes quality checks via unit tests and pylint before any pull request is merged into the main branch. Additionally, any push to the main branch triggers a deployment to the AWS EC2 instance.
+
+The frontend of the application is deployed on AWS CloudFront and can be accessed via [this link](https://d3jxswvg482l9t.cloudfront.net/).
+
+
 
 ## Features
 
-- Movie Showtimes: Users can enter their city and date to view all movie showtimes from all cinemas in that city. The application provides detailed information about each showtime and includes links for additional details.
+- **Movie Showtimes**: Users can enter their city and date to view all movie showtimes from all cinemas in that city. The application provides detailed information about each showtime and includes links for additional details.
 
-- Data Scraping: The application utilizes Python scripts with BeautifulSoup (bs4) and Selenium to scrape data. Once a day, the scraper executes tasks using RabbitMQ and Celery, gathering showtime information for all cities, cinemas, and corresponding dates. The data is then saved into the application's models.
+- **Data Scraping**: The application utilizes Python scripts with BeautifulSoup (bs4) and Selenium to scrape data. Once a day, the scraper executes tasks using RabbitMQ and Celery, gathering showtime information for all cities, cinemas, and corresponding dates. The data is then saved into the application's models.
 
-- API Management: The movie_api module manages the API views using Django Rest Framework (DRF) and the filter module to process requests from the frontend. It ensures the appropriate data is passed to the frontend queries and records information about the retrieved data for analysis and further application development.
+- **API Management**: The movie_api module manages the API views using Django Rest Framework (DRF) and the filter module to process requests from the frontend. It ensures the appropriate data is passed to the frontend queries and records information about the retrieved data for analysis and further application development.
 
-- User Management: The user_api module handles user and superuser creation. It enables the addition of new features as the application evolves.
+- **User Management**: The user_api module handles user and superuser creation. It enables the addition of new features as the application evolves.
+
+- **Cloud Hosting**: The backend is hosted on an AWS EC2 instance and the frontend is deployed on AWS CloudFront. 
 
 ## Running Custom Management Commands
 
