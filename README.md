@@ -17,6 +17,10 @@ The frontend of the application is deployed on AWS CloudFront and can be accesse
 
 - **User Management**: The user_api module handles user and superuser creation. It enables the addition of new features as the application evolves.
 
+- **Continuous Integration and Deployment**: This project uses GitHub Actions to ensure the quality of the code by running unit tests and pylint on every pull request. Additionally, pushes to the main branch trigger a deployment to the AWS EC2 instance.
+
+- **SSL Certification**: The backend domain, moviemate.uk.to, is secured using an SSL certificate obtained via certbot.
+
 - **Cloud Hosting**: The backend is hosted on an AWS EC2 instance and the frontend is deployed on AWS CloudFront. 
 
 ## Running Custom Management Commands
