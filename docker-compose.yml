@@ -136,7 +136,7 @@ services:
     # Mount the local directory 'nginx' to '/etc/nginx/conf.d' in the container,
     # which is the directory Nginx looks at for its server configuration files
     volumes:
-      - ./nginx:/etc/nginx/conf.d
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
 
     # Expose the web server port 80 and map it to port 8082 on the host
     ports:
