@@ -222,7 +222,7 @@ class HeliosScrapeStore(BaseScrapeStore):
         and store it in the database.
         """
         for date, day_numb in self.get_dates().items():
-            for city_name, cinema_num_in_city in self.cities.items():
+            for cinema_num_in_city, city_name in self.cities.items():
                 movie_info_list = self.scraper.get_movie_info(city_name, day_numb, cinema_num_in_city)
 
                 for movie_info in movie_info_list:
@@ -232,7 +232,7 @@ class HeliosScrapeStore(BaseScrapeStore):
                         except ValueError:
                             continue
                         booking_link = show_info['booking_link']
-                        cinema = self.create_cinema(city_name)
+                        cinema = self.create_cinema(city_name, cinema_num_in_city)
                         movie = self.create_movie(movie_info)
                         self.create_show(booking_link, cinema, movie, date, show_time)
 
