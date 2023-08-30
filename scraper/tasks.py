@@ -50,19 +50,21 @@ class BaseScrapeStore(ABC):
         Get a list of dates for which to scrape movie data.
         """
 
-    def create_cinema(self, city_name):
+    def create_cinema(self, city_name, cinema_number=None):
         """
         Create and return a Cinema object.
 
         Args:
             city_name (str): Name of the city.
+            cinema_number (int): Number of the cinema.
 
         Returns:
             Cinema: The created or retrieved Cinema object.
         """
         cinema, _ = Cinema.objects.get_or_create(
             name=self.cinema_name,
-            city=city_name
+            city=city_name,
+            number=cinema_number
         )
         return cinema
 
@@ -232,7 +234,7 @@ class HeliosScrapeStore(BaseScrapeStore):
                         except ValueError:
                             continue
                         booking_link = show_info['booking_link']
-                        cinema = self.create_cinema(city_name)
+                        cinema = self.create_cinema(city_name, cinema_num_in_city)
                         movie = self.create_movie(movie_info)
                         self.create_show(booking_link, cinema, movie, date, show_time)
 
