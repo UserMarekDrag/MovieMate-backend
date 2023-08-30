@@ -232,7 +232,7 @@ class HeliosScrapeStore(BaseScrapeStore):
                         except ValueError:
                             continue
                         booking_link = show_info['booking_link']
-                        cinema = self.create_cinema(city_name, cinema_num_in_city)
+                        cinema = self.create_cinema(city_name)
                         movie = self.create_movie(movie_info)
                         self.create_show(booking_link, cinema, movie, date, show_time)
 
