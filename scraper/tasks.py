@@ -222,7 +222,7 @@ class HeliosScrapeStore(BaseScrapeStore):
         and store it in the database.
         """
         for date, day_numb in self.get_dates().items():
-            for city_name, cinema_num_in_city in self.cities.items():
+            for cinema_num_in_city, city_name in self.cities.items():
                 movie_info_list = self.scraper.get_movie_info(city_name, day_numb, cinema_num_in_city)
 
                 for movie_info in movie_info_list:
