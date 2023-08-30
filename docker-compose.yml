@@ -115,6 +115,10 @@ services:
     # Command to start the Celery Beat scheduler with our Django application and log level set to info
     command: celery -A moviemate beat --loglevel=info
 
+    # Load environment variables from the .env file in the current directory
+    env_file:
+      - .env
+
     # Mount the project directory on the host into the Celery Beat container for development purposes
     volumes:
       - .:/code
@@ -132,7 +136,7 @@ services:
     # Mount the local directory 'nginx' to '/etc/nginx/conf.d' in the container,
     # which is the directory Nginx looks at for its server configuration files
     volumes:
-      - ./nginx:/etc/nginx/conf.d
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
 
     # Expose the web server port 80 and map it to port 8082 on the host
     ports:
