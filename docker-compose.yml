@@ -115,6 +115,10 @@ services:
     # Command to start the Celery Beat scheduler with our Django application and log level set to info
     command: celery -A moviemate beat --loglevel=info
 
+    # Load environment variables from the .env file in the current directory
+    env_file:
+      - .env
+
     # Mount the project directory on the host into the Celery Beat container for development purposes
     volumes:
       - .:/code
