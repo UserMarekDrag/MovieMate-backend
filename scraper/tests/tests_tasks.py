@@ -78,7 +78,8 @@ class TestMultikinoScrapeStore(TestCase):
             self.multikino.create_cinema('Kraków')
         mock_get_or_create.assert_called_with(
             name='multikino',
-            city='Kraków'
+            city='Kraków',
+            number=None
         )
 
 
@@ -115,10 +116,11 @@ class TestHeliosScrapeStore(TestCase):
         Test case to check the create_cinema method.
         """
         with patch('scraper.tasks.Cinema.objects.get_or_create', return_value=(Mock(), True)) as mock_get_or_create:
-            self.helios.create_cinema('Kraków')
+            self.helios.create_cinema('Kraków', 1)
         mock_get_or_create.assert_called_with(
             name='helios',
-            city='Kraków'
+            city='Kraków',
+            number=1
         )
 
 

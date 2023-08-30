@@ -29,7 +29,7 @@ class CinemaSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = Cinema
-        fields = ['name', 'city', 'address']
+        fields = ['name', 'city', 'address', 'number']
 
 
 class MovieSerializer(serializers.ModelSerializer):
