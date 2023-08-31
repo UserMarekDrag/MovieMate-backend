@@ -256,7 +256,6 @@ def scrape_and_store_multikino(cities):
     Args:
         cities (list): List of cities to scrape movie data for.
     """
-    delete_past_shows.delay()
     scraper = MultikinoScrapeStore(cities)
     scraper.scrape_and_store_data()
 
@@ -269,6 +268,5 @@ def scrape_and_store_helios(cities):
     Args:
         cities (dict): Dictionary of cities and cinema numbers to scrape movie data for.
     """
-    delete_past_shows.delay()
     scraper = HeliosScrapeStore(cities)
     scraper.scrape_and_store_data()
