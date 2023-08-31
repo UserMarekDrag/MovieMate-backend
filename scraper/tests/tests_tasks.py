@@ -2,8 +2,10 @@ from datetime import datetime
 from unittest import TestCase
 from unittest.mock import patch, Mock
 from scraper.tasks import add_days, BaseScrapeStore
-from scraper.tasks import MultikinoScrapeStore, HeliosScrapeStore, scrape_and_store_multikino, scrape_and_store_helios
+from scraper.tasks import MultikinoScrapeStore, HeliosScrapeStore, scrape_and_store_multikino, scrape_and_store_helios,\
+    delete_past_shows
 from scraper.scraper import MultikinoScraper, HeliosScraper
+from scraper.models import Cinema, Movie, Show
 
 
 class TestAddDays(TestCase):
@@ -144,3 +146,29 @@ class TestCeleryTasks(TestCase):
         """
         scrape_and_store_helios({"Kraków": 1})
         mock_scrape_and_store_data.assert_called_once()
+
+
+class TestDeletePastShows(TestCase):
+    """
+    Test class for the delete_past_shows task.
+    """
+
+    def setUp(self):
+        """
+        Set up the test data.
+        """
+        self.cinema = Cinema.objects.create(name='Cinema Test', city='City Test')
+        self.movie = Movie.objects.create(
+            title='Movie Test', category='Action', description='Description Test', image_url='www.test.com')
+        self.past_show = Show.objects.create(
+            cinema=self.cinema, movie=self.movie, date='2022-06-01', time='13:00:00', booking_link='www.test.com/1')
+        self.future_show = Show.objects.create(
+            cinema=self.cinema, movie=self.movie, date='2035-06-01', time='13:00:00', booking_link='www.test.com/2')
+
+    def test_delete_past_shows(self):
+        """
+        Test case to check the delete_past_shows task.
+        """
+        delete_past_shows()
+        self.assertFalse(Show.objects.filter(id=self.past_show.id).exists())
+        self.assertTrue(Show.objects.filter(id=self.future_show.id).exists())
