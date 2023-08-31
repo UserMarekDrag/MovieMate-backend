@@ -240,6 +240,15 @@ class HeliosScrapeStore(BaseScrapeStore):
 
 
 @shared_task
+def delete_past_shows():
+    """
+    Celery task for deleting past shows from the database.
+    """
+    today = datetime.today().date()
+    Show.objects.filter(date__lt=today).delete()
+
+
+@shared_task
 def scrape_and_store_multikino(cities):
     """
     Celery task for scraping and storing movie data from Multikino website.
@@ -247,6 +256,7 @@ def scrape_and_store_multikino(cities):
     Args:
         cities (list): List of cities to scrape movie data for.
     """
+    delete_past_shows.delay()
     scraper = MultikinoScrapeStore(cities)
     scraper.scrape_and_store_data()
 
@@ -259,5 +269,6 @@ def scrape_and_store_helios(cities):
     Args:
         cities (dict): Dictionary of cities and cinema numbers to scrape movie data for.
     """
+    delete_past_shows.delay()
     scraper = HeliosScrapeStore(cities)
     scraper.scrape_and_store_data()
