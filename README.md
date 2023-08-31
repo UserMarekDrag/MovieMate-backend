@@ -33,7 +33,13 @@ MovieMate allows to load cinema data and run scraper tasks directly through Djan
 python manage.py load_cinemas
 ```
 
-2. To run the scraper tasks for all cinemas:
+2. To delete past show records from database:
+
+```bash
+python manage.py clean_shows
+```
+
+3. To run the scraper tasks for all cinemas:
 
 ```bash
 python manage.py run_scraper --all
