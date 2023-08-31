@@ -189,4 +189,8 @@ CELERY_BEAT_SCHEDULE = {
         'schedule': crontab(hour=20, minute=10),
         'args': (CITIES['helios'],),
     },
+    'delete_past_shows_data': {
+        'task': 'scraper.tasks.delete_past_shows',
+        'schedule': crontab(hour=15, minute=3),
+    },
 }
