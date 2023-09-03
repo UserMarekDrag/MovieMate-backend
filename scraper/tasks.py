@@ -143,11 +143,11 @@ class MultikinoScrapeStore(BaseScrapeStore):
         """
         movie, _ = Movie.objects.get_or_create(
             title=movie_info['title'],
+            movie_url=movie_info['movie_url'],
             defaults={
                 'category': movie_info['category'],
                 'description': movie_info['description'],
                 'image_url': movie_info['image_url'],
-                'movie_url': movie_info['movie_url'],
             }
         )
         return movie
@@ -211,9 +211,9 @@ class HeliosScrapeStore(BaseScrapeStore):
         """
         movie, _ = Movie.objects.get_or_create(
             title=movie_info['title'],
+            movie_url=movie_info['movie_url'],
             defaults={
                 'image_url': movie_info['image_url'],
-                'movie_url': movie_info['movie_url'],
             }
         )
         return movie

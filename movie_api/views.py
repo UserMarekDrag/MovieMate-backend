@@ -74,10 +74,28 @@ class ShowList(generics.ListAPIView):
     API endpoint for listing shows based on filters.
     """
     permission_classes = [AllowAny]  # Authorization off
-    queryset = Show.objects.all()
     serializer_class = ShowSerializer
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['cinema__city', 'date']
+
+    def get_queryset(self):
+        """
+        Get a queryset of Show objects filtered by the provided query parameters.
+
+        The queryset can be filtered by 'cinema__city' and 'date'. If 'cinema__city' is provided in the query
+        parameters, the queryset will be filtered to include only shows in cinemas in cities that start with
+        the provided string. If 'date' is provided, the queryset will be filtered to include only shows on that date.
+
+        Returns:
+        QuerySet: The queryset of Show objects, filtered according to the provided query parameters.
+        """
+        queryset = Show.objects.all()
+        city = self.request.query_params.get('cinema__city', None)
+        date = self.request.query_params.get('date', None)
+        if city is not None:
+            queryset = queryset.filter(cinema__city__startswith=city)
+        if date is not None:
+            queryset = queryset.filter(date=date)
+        return queryset
 
     def list(self, request, *args, **kwargs):
         """
