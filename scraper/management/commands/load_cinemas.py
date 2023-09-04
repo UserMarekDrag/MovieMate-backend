@@ -18,10 +18,18 @@ class Command(BaseCommand):
             cinemas = json.load(file)
 
         for cinema in cinemas:
-            Cinema.objects.update_or_create(
-                name=cinema['name'],
-                city=cinema['city'],
-                defaults={'address': cinema['address']},
-            )
+            if cinema['name'] == 'multikino':
+                Cinema.objects.update_or_create(
+                    name=cinema['name'],
+                    city=cinema['city'],
+                    defaults={'address': cinema['address']}
+                )
+            elif cinema['name'] == 'helios':
+                Cinema.objects.update_or_create(
+                    name=cinema['name'],
+                    city=cinema['city'],
+                    number=cinema['number'],
+                    defaults={'address': cinema['address']}
+                )
 
         self.stdout.write(self.style.SUCCESS('Successfully updated cinema data.'))
