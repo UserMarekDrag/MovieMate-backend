@@ -1,42 +1,596 @@
 [
     {
+        "number": null,
         "name": "multikino",
-        "city": "kielce",
-        "address": "ul. Warszawska 26"
+        "city": "biala-podlaska",
+        "address": "ul. Brzeska 21, 21-500 Biała Podlaska"
     },
     {
+        "number": null,
+        "name": "multikino",
+        "city": "bydgoszcz",
+        "address": "ul. Marszałka Focha 48, 85-070 Bydgoszcz"
+    },
+    {
+        "number": null,
+        "name": "multikino",
+        "city": "czechowice-dziedzice",
+        "address": "ul. Legionów 83, 43-502 Czechowice-Dziedzice"
+    },
+    {
+        "number": null,
+        "name": "multikino",
+        "city": "elblag",
+        "address": "ul. płk. Stanisława Dąbka 152, 82-300 Elbląg"
+    },
+    {
+        "number": null,
         "name": "multikino",
         "city": "gdansk",
-        "address": "al. Zwycięstwa 14"
+        "address": "al. Zwycięstwa 14, 80-219 Gdańsk"
     },
     {
+        "number": null,
+        "name": "multikino",
+        "city": "glogow",
+        "address": "ul. Piłsudskiego 19, 67-210 Głogów"
+    },
+    {
+        "number": null,
+        "name": "multikino",
+        "city": "gorzow-wielkopolski",
+        "address": "ul. Kombatantów 30, 66-400 Gorzów Wielkopolski"
+    },
+    {
+        "number": null,
+        "name": "multikino",
+        "city": "jaworzno",
+        "address": "ul. Grunwaldzka 59, 43-600 Jaworzno"
+    },
+    {
+        "number": null,
+        "name": "multikino",
+        "city": "kalisz",
+        "address": "ul. 3 Maja 1, 62-800 Kalisz"
+    },
+    {
+        "number": null,
+        "name": "multikino",
+        "city": "katowice",
+        "address": "ul. 3 Maja 30, 40-097 Katowice"
+    },
+    {
+        "number": null,
+        "name": "multikino",
+        "city": "kielce",
+        "address": "ul. Warszawska 26, 25-312 Kielce"
+    },
+    {
+        "number": null,
+        "name": "multikino",
+        "city": "klodzko",
+        "address": "ul. Noworudzka 2, 57-300 Kłodzko"
+    },
+    {
+        "number": null,
+        "name": "multikino",
+        "city": "koszalin",
+        "address": "Forum Koszalin ul. Paderewskiego 1, 75-736 Koszalin"
+    },
+    {
+        "number": null,
         "name": "multikino",
         "city": "krakow",
-        "address": "ul. Dobrego Pasterza 128"
+        "address": "Dobrego Pasterza 128, 30-962 Kraków"
     },
     {
+        "number": null,
+        "name": "multikino",
+        "city": "leszno",
+        "address": "Al. Konstytucji 3 Maja 12, 64-100 Leszno"
+    },
+    {
+        "number": null,
         "name": "multikino",
         "city": "lublin",
-        "address": "Aleja Spółdzielczości Pracy 36B"
+        "address": "Aleja Spółdzielczości Pracy 36B, 20-147 Lublin"
     },
     {
+        "number": null,
+        "name": "multikino",
+        "city": "lodz",
+        "address": "Al. Piłsudskiego 5, 90-368 Łódź"
+    },
+    {
+        "number": null,
+        "name": "multikino",
+        "city": "mielec",
+        "address": "ul. Powstańców Warszawy 4, 39-300 Mielec"
+    },
+    {
+        "number": null,
+        "name": "multikino",
+        "city": "olsztyn",
+        "address": "Galeria Warmińska ul. Tuwima 26, 10-748 Olsztyn"
+    },
+    {
+        "number": null,
+        "name": "multikino",
+        "city": "poznan-malta",
+        "address": "ul. Maltańska 1, 61-131 Poznań"
+    },
+    {
+        "number": null,
+        "name": "multikino",
+        "city": "poznan-multikino-51",
+        "address": "ul. Królowej Jadwigi 51, 61-872 Poznań"
+    },
+    {
+        "number": null,
+        "name": "multikino",
+        "city": "poznan-stary-browar",
+        "address": "Stary Browar ul. Półwiejska 42, 61-888 Poznań"
+    },
+    {
+        "number": null,
+        "name": "multikino",
+        "city": "pruszkow",
+        "address": "ul. Sienkiewicza 19, 05-800 Pruszków"
+    },
+    {
+        "number": null,
+        "name": "multikino",
+        "city": "radom",
+        "address": "ul. Bolesława Chrobrego 1, 26-609 Radom"
+    },
+    {
+        "number": null,
+        "name": "multikino",
+        "city": "rumia",
+        "address": "ul. Sabata 1, 84-230 Rumia"
+    },
+    {
+        "number": null,
+        "name": "multikino",
+        "city": "rybnik",
+        "address": "ul. Bolesława Chrobrego 1, 44-200 Rybnik"
+    },
+    {
+        "number": null,
+        "name": "multikino",
+        "city": "rzeszow",
+        "address": "al. Kopisto 1, 35-315 Rzeszów"
+    },
+    {
+        "number": null,
+        "name": "multikino",
+        "city": "slupsk",
+        "address": "ul. Szczecińska 57, 76-218 Słupsk"
+    },
+    {
+        "number": null,
+        "name": "multikino",
+        "city": "sopot",
+        "address": "ul. Boh. Monte Cassino 63, 81-767 Sopot"
+    },
+    {
+        "number": null,
+        "name": "multikino",
+        "city": "szczecin",
+        "address": "al. Wyzwolenia 18-20, 70-554 Szczecin"
+    },
+    {
+        "number": null,
+        "name": "multikino",
+        "city": "swidnica",
+        "address": "ul. Westerplatte 29, 58-100 Świdnica"
+    },
+    {
+        "number": null,
+        "name": "multikino",
+        "city": "swinoujscie",
+        "address": "ul. Jarosława Dąbrowskiego 5, 72-600 Świnoujście"
+    },
+    {
+        "number": null,
+        "name": "multikino",
+        "city": "tarnow",
+        "address": "ul. Krakowska 149/154, 33-100 Tarnów"
+    },
+    {
+        "number": null,
+        "name": "multikino",
+        "city": "tychy-city-point",
+        "address": "al. Jana Pawła II 16/18, 43-100 Tychy"
+    },
+    {
+        "number": null,
+        "name": "multikino",
+        "city": "tychy-gemini-park",
+        "address": "ul. Towarowa 2C 43-100 Tychy, 43-100 Tychy"
+    },
+    {
+        "number": null,
+        "name": "multikino",
+        "city": "warszawa-atrium-reduta",
+        "address": "Aleje Jerozolimskie 148, 02-326 Warszawa"
+    },
+    {
+        "number": null,
+        "name": "multikino",
+        "city": "warszawa-mlociny",
+        "address": "ul. Zgrupowania AK Kampinos 15, 01-943 Warszawa"
+    },
+    {
+        "number": null,
+        "name": "multikino",
+        "city": "warszawa-targowek",
+        "address": "ul. Głębocka 15, 03-287 Warszawa"
+    },
+    {
+        "number": null,
+        "name": "multikino",
+        "city": "warszawa-ursynow",
+        "address": "al. Komisji Edukacji Narodowej 60, 02-777 Warszawa"
+    },
+    {
+        "number": null,
+        "name": "multikino",
+        "city": "warszawa-wola-park",
+        "address": "ul. Górczewska 124, 01-460 Warszawa"
+    },
+    {
+        "number": null,
+        "name": "multikino",
+        "city": "warszawa-zlote-tarasy",
+        "address": "ul. Złota 59, 00-120 Warszawa"
+    },
+    {
+        "number": null,
+        "name": "multikino",
+        "city": "wloclawek",
+        "address": "ul. Pułaskiego 10-12, 87-800 Włocławek"
+    },
+    {
+        "number": null,
+        "name": "multikino",
+        "city": "wroclaw-pasaz-grunwaldzki",
+        "address": "pl. Grunwaldzki 22, 50-363 Wrocław"
+    },
+    {
+        "number": null,
+        "name": "multikino",
+        "city": "zabrze",
+        "address": "ul. Gdańska 18, 41-800 Zabrze"
+    },
+    {
+        "number": null,
+        "name": "multikino",
+        "city": "zgorzelec",
+        "address": "ul. Armii Krajowej 52a, 59-900 Zgorzelec"
+    },
+    {
+        "number": 37,
         "name": "helios",
-        "city": "kielce",
-        "address": "ul. Świętokrzyska 20"
+        "city": "belchatow",
+        "address": "ul.Kolejowa 6, 97-400 Bełchatów"
     },
     {
+        "number": 26,
         "name": "helios",
-        "city": "sosnowiec",
-        "address": "ul. Modrzejowska 32b"
+        "city": "bialystok",
+        "address": "ul. Świętojańska 15, 15-277 Białystok"
     },
-    {
+        {
+        "number": 6,
         "name": "helios",
-        "city": "poznan",
-        "address": "ul. Pleszewska 1"
+        "city": "bialystok",
+        "address": "ul. Czesława Miłosza 2, 15-265 Białystok"
     },
-    {
+        {
+        "number": 46,
+        "name": "helios",
+        "city": "bialystok",
+        "address": "ul. Jurowiecka 1, 15-101 Białystok"
+    },
+        {
+        "number": 7,
+        "name": "helios",
+        "city": "bielsko-biala",
+        "address": "ul. Mostowa 5, 43-300 Bielsko-Biała"
+    },
+        {
+        "number": 38,
         "name": "helios",
         "city": "bydgoszcz",
-        "address": "ul. Fordońska 141"
+        "address": "ul. Fordońska 141, 85-739 Bydgoszcz"
+    },
+    {
+        "number": 27,
+        "name": "helios",
+        "city": "dabrowa-gornicza",
+        "address": "ul. Jana III Sobieskiego 6, 41-300 Dąbrowa Górnicza"
+    },
+    {
+        "number": 2,
+        "name": "helios",
+        "city": "gdansk",
+        "address": "ul. Kołobrzeska 41C, 80-391 Gdańsk"
+    },
+    {
+        "number": 58,
+        "name": "helios",
+        "city": "gdansk",
+        "address": "Targ Sienny 7, 80-806 Gdańsk"
+    },
+    {
+        "number": 49,
+        "name": "helios",
+        "city": "gdansk",
+        "address": "ul. Kilińskiego 4, 80-452 Gdańsk"
+    },
+    {
+        "number": 42,
+        "name": "helios",
+        "city": "gdynia",
+        "address": "ul. Kazimierza Górskiego 2, 81-304 Gdynia"
+    },
+    {
+        "number": 9,
+        "name": "helios",
+        "city": "gniezno",
+        "address": "ul. Pałucka 2, 62-200 Gniezno"
+    },
+    {
+        "number": 10,
+        "name": "helios",
+        "city": "gorzow-wielkopolski",
+        "address": "Al. Konstytucji 3 Maja 102, 66-400 Gorzów Wielkopolski"
+    },
+    {
+        "number": 32,
+        "name": "helios",
+        "city": "grudziadz",
+        "address": "ul. Chełmińska 4, 86-300 Grudziądz"
+    },
+    {
+        "number": 45,
+        "name": "helios",
+        "city": "jelenia-gora",
+        "address": "Al. Jana Pawła II 51, 58-506 Jelenia Góra"
+    },
+    {
+        "number": 40,
+        "name": "helios",
+        "city": "kalisz",
+        "address": "ul. Górnośląska 82, 62-800 Kalisz"
+    },
+    {
+        "number": 51,
+        "name": "helios",
+        "city": "katowice",
+        "address": "ul. Kościuszki 229, 40-600 Katowice"
+    },
+    {
+        "number": 34,
+        "name": "helios",
+        "city": "kedzierzyn-kozle",
+        "address": "Al. Armii Krajowej 38, 47-220 Kędzierzyn-Koźle"
+    },
+    {
+        "number": 13,
+        "name": "helios",
+        "city": "kielce",
+        "address": "ul. Świętokrzyska 20, 25-329 Kielce"
+    },
+    {
+        "number": 14,
+        "name": "helios",
+        "city": "konin",
+        "address": "ul. Paderewskiego 8, 62-510 Konin"
+    },
+    {
+        "number": 68,
+        "name": "helios",
+        "city": "koszalin",
+        "address": "ul. Jana Pawła II 20, 75-452 Koszalin"
+    },
+    {
+        "number": 55,
+        "name": "helios",
+        "city": "krosno",
+        "address": "ul. Bieszczadzka 29, 38-400 Krosno"
+    },
+    {
+        "number": 61,
+        "name": "helios",
+        "city": "legionowo",
+        "address": "Piłsudskiego 31C, 05-120 Legionowo"
+    },
+    {
+        "number": 30,
+        "name": "helios",
+        "city": "legnica",
+        "address": "ul. Najświętszej Marii Panny 9, 59-220 Legnica"
+    },
+      {
+        "number": 31,
+        "name": "helios",
+        "city": "lubin",
+        "address": "ul. Generała Władysława Sikorskiego 20, 59-300 Lubin"
+    },
+    {
+        "number": 67,
+        "name": "helios",
+        "city": "lomza",
+        "address": "al. Legionów 46, 18-400 Łomża"
+    },
+    {
+        "number": 47,
+        "name": "helios",
+        "city": "lodz",
+        "address": "Al. Politechniki 1, 93-590 Łódź"
+    },
+      {
+        "number": 39,
+        "name": "helios",
+        "city": "nowy-sacz",
+        "address": "ul. Lwowska 80, 33-300 Nowy Sącz"
+    },
+    {
+        "number": 16,
+        "name": "helios",
+        "city": "olsztyn",
+        "address": "Al. Piłsudskiego 16, 10-576 Olsztyn"
+    },
+    {
+        "number": 66,
+        "name": "helios",
+        "city": "opole",
+        "address": "Wrocławska 152/154, 45-837 Opole"
+    },
+      {
+        "number": 17,
+        "name": "helios",
+        "city": "opole",
+        "address": "Pl. Kopernika 17, 45-040 Opole"
+    },
+    {
+        "number": 65,
+        "name": "helios",
+        "city": "ostrow-wielkopolski",
+        "address": "ul. Kaliska 120, 63-400 Ostrów Wielkopolski"
+    },
+    {
+        "number": 60,
+        "name": "helios",
+        "city": "pabianice",
+        "address": "ul. Grobelna 8, 95-200 Pabianice"
+    },
+      {
+        "number": 28,
+        "name": "helios",
+        "city": "pila",
+        "address": "Al. Powst. Wielkopolskich 99, 64-920 Piła"
+    },
+    {
+        "number": 19,
+        "name": "helios",
+        "city": "piotrkow-trybunalski",
+        "address": "ul. Słowackiego 123, 97-300 Piotrków Trybunalski"
+    },
+    {
+        "number": 29,
+        "name": "helios",
+        "city": "plock",
+        "address": "ul. Wyszogrodzka 144, 09-410 Płock"
+    },
+      {
+        "number": 50,
+        "name": "helios",
+        "city": "poznan",
+        "address": "ul. Pleszewska 1, 61-136 Poznań"
+    },
+    {
+        "number": 52,
+        "name": "helios",
+        "city": "przemysl",
+        "address": "ul. Wojciecha Brudzewskiego 1, 37-700 Przemyś"
+    },
+    {
+        "number": 20,
+        "name": "helios",
+        "city": "radom",
+        "address": "ul. Poniatowskiego 5, 26- 610 Radom"
+    },
+      {
+        "number": 36,
+        "name": "helios",
+        "city": "rzeszow",
+        "address": "Al. Piłsudskiego 44, 35-001 Rzeszów"
+    },
+    {
+        "number": 21,
+        "name": "helios",
+        "city": "rzeszow",
+        "address": "Al. Powstańców Warszawy 14, 35-329 Rzeszów"
+    },
+    {
+        "number": 43,
+        "name": "helios",
+        "city": "siedlce",
+        "address": "ul. Piłsudskiego 74, 08-110 Siedlce"
+    },
+      {
+        "number": 22,
+        "name": "helios",
+        "city": "sosnowiec",
+        "address": "ul. Modrzejowska 32b, 41-200 Sosnowiec"
+    },
+    {
+        "number": 56,
+        "name": "helios",
+        "city": "stalowa-wola",
+        "address": "ul. Fryderyka Chopina 42, 37-450 Stalowa Wola"
+    },
+    {
+        "number": 44,
+        "name": "helios",
+        "city": "starachowice",
+        "address": "ul. Ks. Kardynała Stefana Wyszyńskiego 14, 27-200 Starachowice"
+    },
+      {
+        "number": 23,
+        "name": "helios",
+        "city": "szczecin",
+        "address": "ul. Bolesława Krzywoustego 9-10, 70-250 Szczecin"
+    },
+      {
+        "number": 35,
+        "name": "helios",
+        "city": "szczecin",
+        "address": "ul. Andrzeja Struga 42, 70-784 Szczecin"
+    },
+    {
+        "number": 33,
+        "name": "helios",
+        "city": "tczew",
+        "address": "ul. Pomorska 1, 83-110 Tczew"
+    },
+    {
+        "number": 53,
+        "name": "helios",
+        "city": "tomaszow-mazowiecki",
+        "address": "ul. Warszawska 1, 97-200 Tomaszów Mazowiecki"
+    },
+      {
+        "number": 57,
+        "name": "helios",
+        "city": "warszawa",
+        "address": "Aleje Jerozolimskie 179, 02-222 Warszawa"
+    },
+      {
+        "number": 54,
+        "name": "helios",
+        "city": "wolomin",
+        "address": "ul. Geodetów 2, 05-200 Wołomin"
+    },
+    {
+        "number": 48,
+        "name": "helios",
+        "city": "wroclaw",
+        "address": "ul. Czekoladowa 7-9, Bielany Wrocławskie, 55 – 040 Kobierzyce"
+    },
+    {
+        "number": 3,
+        "name": "helios",
+        "city": "wroclaw",
+        "address": "ul. Legnicka 58, 54-204 Wrocław"
+    },
+    {
+        "number": 64,
+        "name": "helios",
+        "city": "zory",
+        "address": "ul. Katowicka 10, 44-240 Żory"
     }
 ]
