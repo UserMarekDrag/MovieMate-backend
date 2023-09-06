@@ -181,16 +181,16 @@ with open('cities.json', 'r', encoding='utf-8') as f:
 CELERY_BEAT_SCHEDULE = {
     'scrape_and_store_data_multikino': {
         'task': 'scraper.tasks.scrape_and_store_multikino',
-        'schedule': crontab(hour=20, minute=5),
+        'schedule': crontab(hour=1, minute=30),
         'args': (CITIES['multikino'],),
     },
     'scrape_and_store_data_helios': {
         'task': 'scraper.tasks.scrape_and_store_helios',
-        'schedule': crontab(hour=20, minute=10),
+        'schedule': crontab(hour=4, minute=30),
         'args': (CITIES['helios'],),
     },
     'delete_past_shows_data': {
         'task': 'scraper.tasks.delete_past_shows',
-        'schedule': crontab(hour=15, minute=3),
+        'schedule': crontab(hour=1, minute=10),
     },
 }
