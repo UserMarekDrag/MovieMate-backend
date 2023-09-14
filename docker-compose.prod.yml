@@ -33,6 +33,7 @@ services:
     command: celery -A moviemate worker --loglevel=info
     env_file:
       - .env
+    restart: always
     depends_on:
       - db
       - rabbit
