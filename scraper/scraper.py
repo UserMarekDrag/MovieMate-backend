@@ -11,7 +11,8 @@ from bs4 import BeautifulSoup
 
 # Constants
 CHROMEDRIVER_PATH = 'chromedriver'
-WAIT_TIME = 30
+WAIT_TIME_MULTIKINO = 300
+WAIT_TIME_HELIOS = 60
 MULTIKINO_URL_FORMAT = 'https://multikino.pl/repertuar/{}/teraz-gramy?data={}'
 HELIOS_URL_FORMAT = 'https://www.helios.pl/{},{}/Repertuar/index/dzien/{}/kino/{}'
 
@@ -87,7 +88,7 @@ class MultikinoScraper(BaseMovieScraper):
             url = self.URL_FORMAT.format(city, showing_date)
             with self.get_chrome_driver() as driver:
                 driver.get(url)
-                wait = WebDriverWait(driver, WAIT_TIME)
+                wait = WebDriverWait(driver, WAIT_TIME_MULTIKINO)
                 wait.until(ec.presence_of_element_located((By.CLASS_NAME, 'filmlist__item')))
                 film_items = driver.find_elements(By.CLASS_NAME, 'filmlist__item')
 
@@ -174,7 +175,7 @@ class HeliosScraper(BaseMovieScraper):
             url = self.URL_FORMAT.format(cinema_numb, city, day, cinema_numb)
             with self.get_chrome_driver() as driver:
                 driver.get(url)
-                wait = WebDriverWait(driver, WAIT_TIME)
+                wait = WebDriverWait(driver, WAIT_TIME_HELIOS)
                 wait.until(ec.presence_of_element_located((By.CLASS_NAME, 'seances-list')))
                 film_items = driver.find_elements(By.XPATH, "//ul/*[contains(@class, 'seance gallery-column')]")
 
