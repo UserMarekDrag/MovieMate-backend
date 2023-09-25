@@ -21,7 +21,7 @@ The frontend of the application is deployed on AWS CloudFront and can be accesse
 
 - **SSL Certification**: The backend domain, moviemate.uk.to, is secured using an SSL certificate obtained via certbot.
 
-- **Cloud Hosting**: The backend is hosted on an AWS EC2 instance and the frontend is deployed on AWS CloudFront. 
+- **Cloud Hosting**: The backend is hosted on an AWS EC2 instance and the frontend is deployed on AWS CloudFront and PostgreSQL is set up on AWS RDS.
 
 ## Running Custom Management Commands
 
@@ -83,6 +83,16 @@ docker-compose build
 docker-compose up
 ```
 4. The backend API will now be running at http://localhost:8000/.
+
+### Database Configuration:
+Configure the AWS RDS PostgreSQL instance and update the `.env` file with the database connection details:
+
+```plaintext
+DB_NAME=<Your AWS RDS Database Name>
+DB_USER=<Your AWS RDS Username>
+DB_PASSWORD=<Your AWS RDS Password>
+DB_HOST=<Your AWS RDS Hostname>
+```
 
 ## Database Schema
 
