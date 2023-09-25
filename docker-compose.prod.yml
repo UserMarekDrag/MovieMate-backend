@@ -1,15 +1,6 @@
 version: "3"
 
 services:
-  db:
-    image: postgres:15-alpine
-    environment:
-      POSTGRES_USER: ${DB_USER}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
-      POSTGRES_DB: ${DB_NAME}
-    volumes:
-      - pg_data:/var/lib/postgresql/data/
-
   rabbit:
     image: rabbitmq:3-management
 
@@ -23,7 +14,6 @@ services:
     volumes:
       - static_volume:/code/static
     depends_on:
-      - db
       - rabbit
 
   celery:
@@ -35,7 +25,6 @@ services:
       - .env
     restart: always
     depends_on:
-      - db
       - rabbit
 
   celery-beat:
@@ -47,7 +36,6 @@ services:
       - .env
     restart: always
     depends_on:
-      - db
       - rabbit
 
   nginx:
@@ -75,5 +63,4 @@ services:
       - ./certbot/conf/:/etc/letsencrypt/
 
 volumes:
-  pg_data:
   static_volume:
