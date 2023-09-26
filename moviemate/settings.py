@@ -194,3 +194,7 @@ CELERY_BEAT_SCHEDULE = {
         'schedule': crontab(hour=1, minute=10),
     },
 }
+
+# Celery worker settings
+CELERY_TASK_SOFT_TIME_LIMIT = 3600
+CELERY_TASK_TIME_LIMIT = 7200
