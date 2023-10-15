@@ -31,7 +31,7 @@ class UserRegisterSerializer(serializers.ModelSerializer):
             username=validated_data['username'],
             password=validated_data['password']
         )
-        return {'username': user_obj.username, 'email': user_obj.email}
+        return user_obj
 
 
 class UserLoginSerializer(serializers.Serializer):
