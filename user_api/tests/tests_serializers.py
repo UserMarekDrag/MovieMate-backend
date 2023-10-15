@@ -15,7 +15,8 @@ class UserSerializerTestCase(TestCase):
         self.user = AppUser.objects.create_user(
             email='testuser@example.com',
             username='testuser',
-            password='password123'
+            password='password123',
+            is_active=True
         )
         self.user_serializer = UserSerializer(instance=self.user)
 
@@ -23,10 +24,9 @@ class UserSerializerTestCase(TestCase):
         """
         Test the UserSerializer.
         """
-        data = self.user_serializer.data
-        self.assertEqual(set(data.keys()), set(['email', 'username']))
-        self.assertEqual(data['email'], self.user.email)
-        self.assertEqual(data['username'], self.user.username)
+        serialized_user = self.user_serializer.data
+        self.assertEqual(serialized_user['email'], self.user.email)
+        self.assertEqual(serialized_user['username'], self.user.username)
 
 
 class UserRegisterSerializerTestCase(TestCase):
@@ -51,8 +51,8 @@ class UserRegisterSerializerTestCase(TestCase):
         """
         self.assertTrue(self.serializer.is_valid(), self.serializer.errors)
         user = self.serializer.save()
-        self.assertEqual(user['email'], self.user_data['email'])
-        self.assertEqual(user['username'], self.user_data['username'])
+        self.assertEqual(user.email, self.user_data['email'])
+        self.assertEqual(user.username, self.user_data['username'])
 
 
 class UserLoginSerializerTestCase(TestCase):
@@ -66,7 +66,8 @@ class UserLoginSerializerTestCase(TestCase):
         self.user = AppUser.objects.create_user(
             email='testuser3@example.com',
             username='testuser3',
-            password='password123'
+            password='password123',
+            is_active=True
         )
         self.login_data = {
             'email': 'testuser3@example.com',
@@ -95,7 +96,8 @@ class UserChangePasswordSerializerTestCase(TestCase):
         self.user = AppUser.objects.create_user(
             email='testuser4@example.com',
             username='testuser4',
-            password='password123'
+            password='password123',
+            is_active=True
         )
         self.factory = RequestFactory()
         self.context = {

@@ -40,7 +40,12 @@ class UserLoginViewTestCase(APITestCase):
         Set up the test by creating an instance of the APIClient and a user instance.
         """
         self.client = APIClient()
-        self.user = User.objects.create_user(username='test', email='test@example.com', password='test1234')
+        self.user = User.objects.create_user(
+            username='test',
+            email='test@example.com',
+            password='test1234',
+            is_active=True
+        )
 
     def test_user_login_view(self):
         """
@@ -61,7 +66,12 @@ class UserLogoutViewTestCase(APITestCase):
         Set up the test by creating an instance of the APIClient, a user instance, and authenticating the client.
         """
         self.client = APIClient()
-        self.user = User.objects.create_user(username='test', email='test@example.com', password='test1234')
+        self.user = User.objects.create_user(
+            username='test',
+            email='test@example.com',
+            password='test1234',
+            is_active=True
+        )
         self.token = Token.objects.create(user=self.user)
         self.api_authentication()
 
@@ -89,7 +99,12 @@ class UserViewTestCase(APITestCase):
         Set up the test by creating an instance of the APIClient, a user instance, and authenticating the client.
         """
         self.client = APIClient()
-        self.user = User.objects.create_user(username='test', email='test@example.com', password='test1234')
+        self.user = User.objects.create_user(
+            username='test',
+            email='test@example.com',
+            password='test1234',
+            is_active=True
+        )
         self.token = Token.objects.create(user=self.user)
         self.api_authentication()
 
@@ -117,7 +132,12 @@ class UserChangePasswordViewTestCase(APITestCase):
         Set up the test by creating an instance of the APIClient, a user instance, and authenticating the client.
         """
         self.client = APIClient()
-        self.user = User.objects.create_user(username='test', email='test@example.com', password='Test1234!')
+        self.user = User.objects.create_user(
+            username='test',
+            email='test@example.com',
+            password='Test1234!',
+            is_active=True
+        )
         self.token = Token.objects.create(user=self.user)
         self.api_authentication()
 
@@ -149,7 +169,12 @@ class UserDeleteViewTestCase(APITestCase):
         Set up the test by creating an instance of the APIClient, a user instance, and authenticating the client.
         """
         self.client = APIClient()
-        self.user = User.objects.create_user(username='test', email='test@example.com', password='Test1234!')
+        self.user = User.objects.create_user(
+            username='test',
+            email='test@example.com',
+            password='Test1234!',
+            is_active=True
+        )
         self.token = Token.objects.create(user=self.user)
         self.api_authentication()
 
