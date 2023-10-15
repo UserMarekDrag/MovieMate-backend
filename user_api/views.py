@@ -3,8 +3,10 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import permissions, status
 
+from mailer.views import send_verification_email
 from .serializers import UserRegisterSerializer, UserLoginSerializer, UserSerializer, UserChangePasswordSerializer
-from .models import AppUser
+from .models import AppUser, EmailVerification
+from .utils import generate_verification_url
 
 
 class UserRegister(APIView):
@@ -15,12 +17,20 @@ class UserRegister(APIView):
 
     def post(self, request):
         """
-        Handles user registration POST request.
+        Handle POST request for user registration.
+        Args:
+            request (HttpRequest): The request instance.
+        Returns:
+            Response: Serialized user data if successful, otherwise error details.
         """
         serializer = UserRegisterSerializer(data=request.data)
         if serializer.is_valid():
             user = serializer.save()
-            return Response(user, status=status.HTTP_201_CREATED)
+            if not user.is_superuser:
+                token = EmailVerification.generate_token_for_user(user)
+                verification_url = generate_verification_url(token)
+                send_verification_email(user, verification_url)
+            return Response(UserSerializer(user).data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
