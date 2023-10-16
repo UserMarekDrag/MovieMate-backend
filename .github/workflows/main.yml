@@ -24,6 +24,11 @@ jobs:
       DB_HOST_TEST: ${{ secrets.DB_HOST_TEST }}
       CELERY_BROKER_URL: ${{ secrets.CELERY_BROKER_URL }}
       DEBUG: ${{ secrets.DEBUG }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_SES_REGION_NAME: ${{ secrets.AWS_SES_REGION_NAME }}
+      AWS_SES_REGION_ENDPOINT: ${{ secrets.AWS_SES_REGION_ENDPOINT }}
+      FRONTEND_BASE_URL: ${{ secrets.FRONTEND_BASE_URL }}
 
   deploy:
     name: Deploy
